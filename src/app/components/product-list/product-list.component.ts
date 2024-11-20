@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as bootstrap from 'bootstrap';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -38,7 +39,9 @@ export class ProductListComponent  implements OnInit{
       image: 'https://img.tatacliq.com/images/i20//437Wx649H/MP000000023964619_437Wx649H_202410051138051.jpeg',
     },
   ];
-  
+     
+constructor(private cartService : CartService){}
+
   ngOnInit(): void {
     this.selectedProduct = this.products;
   }
@@ -51,14 +54,13 @@ export class ProductListComponent  implements OnInit{
 
   // Handle adding to cart
   addToCart(product: any) {
-    const quantity = this.quantities[product.id] || 1; // Use the stored quantity or default to 1
+    const quantity = this.quantities[product.id] || 1;
+    this.cartService.addToCart(product, quantity);
     this.toastMessage = `${product.name} added to cart with quantity: ${quantity}`;
     this.showToast = true;
     setTimeout(() => {
       this.showToast = false;
     }, 3000);
-
-    // Mark the product as added to cart
     this.addedToCart[product.id] = true;
   }
 
