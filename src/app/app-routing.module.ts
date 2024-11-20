@@ -5,12 +5,14 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { CartComponent } from './components/cart/cart.component';
 import { LoginComponent } from './components/login/login.component';
+import { MyOrderComponent } from './components/my-order/my-order.component';
 
 const routes: Routes = [
   { path: 'products', component: ProductListComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: 'cart', component: CartComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'my-order', component: MyOrderComponent },
   { path: '', redirectTo: '/products', pathMatch: 'full' }, // Default Route
 ];
 
