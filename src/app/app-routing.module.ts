@@ -7,11 +7,11 @@ import { CartComponent } from './components/cart/cart.component';
 import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/products', pathMatch: 'full' }, // Default Route
   { path: 'products', component: ProductListComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: 'cart', component: CartComponent },
   { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/products', pathMatch: 'full' }, // Default Route
 ];
 
 @NgModule({

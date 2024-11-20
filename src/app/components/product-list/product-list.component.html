@@ -1,1 +1,32 @@
-<p>product-list works!</p>
+<div class="container py-5">
+    <h1 class="text-center mb-4 fw-bold text-primary">Our Exclusive Products</h1>
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let product of products">
+        <div class="card product-card shadow-sm">
+          <div class="card-img-container">
+            <img
+              [src]="product.image"
+              class="card-img-top"
+              alt="{{ product.name }}"
+            />
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text text-muted">
+              {{ product.description | slice: 0:50 }}...
+            </p>
+            <h6 class="text-success fw-bold">₹{{ product.price }}</h6>
+          </div>
+          <div class="card-footer text-center">
+            <button class="btn btn-primary btn-sm rounded-pill me-2">
+              View Details
+            </button>
+            <button class="btn btn-outline-success btn-sm rounded-pill">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
