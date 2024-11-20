@@ -11,6 +11,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { MyOrderComponent } from './components/my-order/my-order.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AppRoutingModule } from './app-routing.module';
     CartComponent,
     CheckoutComponent,
     AdminComponent,
-    LoginComponent
+    LoginComponent,
+    MyOrderComponent
   ],
   imports: [
     BrowserModule,

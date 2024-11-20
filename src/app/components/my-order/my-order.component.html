@@ -1,0 +1,55 @@
+<div class="container py-5">
+    <h2 class="text-center mb-4 fw-bold text-primary">My Orders</h2>
+    
+    <div *ngIf="orders.length > 0; else noOrders">
+      <div class="row g-4">
+        <div *ngFor="let order of orders" class="col-lg-6 col-md-12">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start">
+                <h5 class="card-title">Order #{{ order.id }}</h5>
+                <span class="badge" [ngClass]="getStatusClass(order.status)">
+                  {{ order.status }}
+                </span>
+              </div>
+              <p class="text-muted mb-2">Placed on: {{ order.date | date }}</p>
+              <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let product of order.products">
+                  <span>{{ product.name }} (x{{ product.quantity }})</span>
+                  <span>₹{{ product.price * product.quantity }}</span>
+                </li>
+              </ul>
+              <div class="d-flex justify-content-between align-items-center">
+                <strong>Total: ₹{{ order.total }}</strong>
+                <div>
+                  <button
+                    class="btn btn-warning btn-sm me-2"
+                    (click)="trackOrder(order.id)"
+                    [disabled]="order.status === 'Cancelled'"
+                  >
+                    Track
+                  </button>
+                  <button
+                    class="btn btn-danger btn-sm"
+                    (click)="cancelOrder(order.id)"
+                    [disabled]="order.status === 'Cancelled'"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- No Orders Message -->
+    <ng-template #noOrders>
+      <div class="text-center">
+        <p class="text-muted fs-4">You have no orders yet.</p>
+        <a routerLink="/products" class="btn btn-primary">Shop Now</a>
+      </div>
+    </ng-template>
+  </div>
+  
