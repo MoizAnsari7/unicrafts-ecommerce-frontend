@@ -4,11 +4,7 @@
       <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let product of products">
         <div class="card product-card shadow-sm">
           <div class="card-img-container">
-            <img
-              [src]="product.image"
-              class="card-img-top"
-              alt="{{ product.name }}"
-            />
+            <img [src]="product.image" class="card-img-top img-fluid" alt="{{ product.name }}" />
           </div>
           <div class="card-body text-center">
             <h5 class="card-title">{{ product.name }}</h5>
@@ -18,11 +14,117 @@
             <h6 class="text-success fw-bold">₹{{ product.price }}</h6>
           </div>
           <div class="card-footer text-center">
-            <button class="btn btn-primary btn-sm rounded-pill me-2">
+            <button
+              class="btn btn-primary btn-sm rounded-pill me-2"
+              (click)="openModal(product)"
+            >
               View Details
             </button>
-            <button class="btn btn-outline-success btn-sm rounded-pill">
-              Add to Cart
+            <button
+              class="btn btn-outline-success btn-sm rounded-pill"
+              (click)="addToCart(product)"
+            >
+              {{ addedToCart[product.id] ? 'Added' : 'Add to Cart' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Toast Notification -->
+    <div
+      *ngIf="showToast"
+      class="toast-container position-fixed bottom-0 end-0 p-3"
+      style="z-index: 1050"
+    >
+      <div
+        class="toast show align-items-center text-bg-success border-0"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body">
+            {{ toastMessage }}
+          </div>
+          <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            (click)="closeToast()"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="productModal"
+      tabindex="-1"
+      aria-labelledby="productModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="productModalLabel">
+              {{ selectedProduct?.name }}
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body text-center">
+            <img
+              [src]="selectedProduct?.image"
+              alt="{{ selectedProduct?.name }}"
+              class="img-fluid mb-3"
+              style="max-height: 250px; object-fit: contain;"
+            />
+            <p class="text-muted">{{ selectedProduct?.description }}</p>
+            <h6 class="text-success fw-bold">
+              Price: ₹{{ selectedProduct?.price }}
+            </h6>
+  
+            <!-- Quantity control -->
+            <div class="d-flex justify-content-center align-items-center mt-3">
+              <button
+                class="btn btn-secondary btn-sm"
+                (click)="decrementQuantity()"
+              >
+                -
+              </button>
+              <span class="mx-3">{{ quantities[selectedProduct.id] || 1 }}</span>
+              <button
+                class="btn btn-secondary btn-sm"
+                (click)="incrementQuantity()"
+              >
+                +
+              </button>
+            </div>
+  
+            <!-- Total Price -->
+            <h6 class="mt-3 text-primary fw-bold">
+              Total: ₹{{ selectedProduct?.price * (quantities[selectedProduct.id] || 1) }}
+            </h6>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary btn-sm"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              class="btn btn-primary btn-sm"
+              (click)="addToCart(selectedProduct)"
+            >
+              {{ addedToCart[selectedProduct.id] ? 'Added' : 'Add to Cart' }}
             </button>
           </div>
         </div>
