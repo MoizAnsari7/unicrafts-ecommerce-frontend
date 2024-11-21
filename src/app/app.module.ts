@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
@@ -15,6 +15,7 @@ import { MyOrderComponent } from './components/my-order/my-order.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -30,12 +31,20 @@ import { HttpClientModule } from '@angular/common/http';
     RegisterComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule, 
+    ToastrModule.forRoot({
+      timeOut: 3000,           // Duration
+      positionClass: 'toast-top-right', // Position
+      preventDuplicates: true, // Prevent duplicates
+      closeButton: true,       // Show close button
+      progressBar: true,       // Show progress bar
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
