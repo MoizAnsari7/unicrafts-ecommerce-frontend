@@ -1,0 +1,89 @@
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
+      <div class="card-header text-center">
+        <h3 class="text-primary">Create an Account</h3>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <!-- Username Field -->
+          <div class="form-group mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              id="username"
+              class="form-control"
+              formControlName="username"
+              placeholder="Enter your username"
+            />
+            <div *ngIf="username?.invalid && username?.touched" class="text-danger mt-1">
+              Username is required (min 3 characters).
+            </div>
+          </div>
+  
+          <!-- Email Field -->
+          <div class="form-group mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              formControlName="email"
+              placeholder="Enter your email"
+            />
+            <div *ngIf="email?.invalid && email?.touched" class="text-danger mt-1">
+              Enter a valid email address.
+            </div>
+          </div>
+  
+          <!-- Password Field -->
+          <div class="form-group mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              formControlName="password"
+              placeholder="Enter your password"
+            />
+            <div *ngIf="password?.invalid && password?.touched" class="text-danger mt-1">
+              Password must be at least 6 characters.
+            </div>
+          </div>
+  
+          <!-- Confirm Password Field -->
+          <div class="form-group mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              class="form-control"
+              formControlName="confirmPassword"
+              placeholder="Confirm your password"
+            />
+            <div *ngIf="confirmPassword?.invalid && confirmPassword?.touched" class="text-danger mt-1">
+              Confirm Password is required.
+            </div>
+            <div *ngIf="registerForm.errors?.['mismatch']" class="text-danger mt-1">
+              Passwords do not match.
+            </div>
+          </div>
+  
+          <!-- Submit Button -->
+          <div class="d-grid">
+            <button
+              type="submit"
+              [disabled]="registerForm.invalid"
+              class="btn btn-primary btn-block"
+            >
+              Register
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer text-center">
+        <small>Already have an account?</small>
+        <a routerLink="/login" class="text-primary ms-2">Login here</a>
+      </div>
+    </div>
+  </div>
+  

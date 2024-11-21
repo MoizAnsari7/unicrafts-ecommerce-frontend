@@ -1,0 +1,27 @@
+/* Center the card vertically and horizontally */
+.container-fluid {
+    background-color: #c1d8f0; /* Light background for contrast */
+  }
+  
+  /* Adjust the card style */
+  .card {
+    border-radius: 10px; /* Rounded corners for better appearance */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  }
+  
+  /* Input and label styling for consistency */
+  .form-control {
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  /* Add spacing to input fields */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  /* Align the footer links */
+  .card-footer small {
+    font-size: 14px;
+  }
+  
