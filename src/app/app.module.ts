@@ -37,6 +37,7 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    HttpClientModule ,
     HttpClientModule, 
     ToastrModule.forRoot({
       timeOut: 3000,           // Duration
