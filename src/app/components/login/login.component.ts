@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrServices } from 'src/app/services/toastr.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {}
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private toastr : ToastrServices) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -35,10 +36,11 @@ export class LoginComponent implements OnInit {
       const loginData = this.loginForm.value;
       this.userService.login(loginData).subscribe((res:any)=>{
   console.log('Form Submitted:', res);
+  this.toastr.success(res.message)
 this.router.navigate(['/']);
 })
     } else {
-      alert('Please fill out the form correctly.');
+      this.toastr.error("Invalid Creditinials")
     }
   }
 }
