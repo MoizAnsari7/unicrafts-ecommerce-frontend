@@ -12,6 +12,9 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { MyOrderComponent } from './components/my-order/my-order.component';
+import { RegisterComponent } from './components/register/register.component';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,13 +26,16 @@ import { MyOrderComponent } from './components/my-order/my-order.component';
     CheckoutComponent,
     AdminComponent,
     LoginComponent,
-    MyOrderComponent
+    MyOrderComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

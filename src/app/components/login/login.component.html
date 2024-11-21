@@ -1,5 +1,50 @@
-<form (submit)="login()">
-    <input type="email" [(ngModel)]="email" placeholder="Email" />
-    <input type="password" [(ngModel)]="password" placeholder="Password" />
-    <button type="submit">Login</button>
-  </form>
+<div class="container-fluid d-flex justify-content-center align-items-center ">
+  <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%;">
+    <h2 class="text-center text-primary mb-4">Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Email Field -->
+      <div class="form-group mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          placeholder="Enter your email"
+        />
+        <div *ngIf="email?.touched && email?.invalid" class="text-danger mt-1">
+          <small *ngIf="email?.errors?.['required']">Email is required.</small>
+          <small *ngIf="email?.errors?.['email']">Please enter a valid email.</small>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          formControlName="password"
+          placeholder="Enter your password"
+        />
+        <div *ngIf="password?.touched && password?.invalid" class="text-danger mt-1">
+          <small *ngIf="password?.errors?.['required']">Password is required.</small>
+          <small *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn btn-primary btn-block w-100"
+        [disabled]="loginForm.invalid"
+      >
+        Login
+      </button>
+    </form>
+    <div class="text-center mt-3">
+      <small>Don't have an account? <a routerLink="/register">Register</a></small>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+/* Center the card in the middle of the page */
+.container-fluid {
+    height: 660px;
+    background-color: #c5dff9; /* Light background */
+  }
+  
+  /* Form field spacing */
+  .form-control {
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  /* Add shadow and rounded corners to the card */
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  

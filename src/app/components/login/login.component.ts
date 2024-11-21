@@ -1,20 +1,44 @@
-import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
-  email = '';
-  password = '';
+export class LoginComponent implements OnInit {
+  loginForm!: FormGroup;
 
-  constructor(private authService: AuthService) {}
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {}
 
-  login() {
-    this.authService.login({ email: this.email, password: this.password }).subscribe((response) => {
-      console.log(response);
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
+
+  // Getters for form controls
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+  // Submit handler
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      const loginData = this.loginForm.value;
+      this.userService.login(loginData).subscribe((res:any)=>{
+  console.log('Form Submitted:', res);
+this.router.navigate(['/']);
+})
+    } else {
+      alert('Please fill out the form correctly.');
+    }
   }
 }
