@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -7,23 +8,30 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
-  userProfile: any = {
-    username: '',
-    email: '',
-  };
-
+  profileForm!: FormGroup; // Reactive form group
   selectedFile: File | null = null;
 
-  constructor(private userService: UserService) {}
+  constructor(private fb: FormBuilder, private userService: UserService) {}
 
   ngOnInit(): void {
+    this.initForm();
     this.loadUserProfile();
+  }
+
+  initForm(): void {
+    this.profileForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+    });
   }
 
   loadUserProfile(): void {
     this.userService.getUserProfile().subscribe(
       (profile) => {
-        this.userProfile = profile;
+        this.profileForm.patchValue({
+          username: profile.username,
+          email: profile.email,
+        });
       },
       (error) => {
         console.error('Error loading profile:', error);
@@ -55,7 +63,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateProfile(): void {
-    this.userService.updateUserProfile(this.userProfile).subscribe(
+    if (this.profileForm.invalid) {
+      this.profileForm.markAllAsTouched();
+      return;
+    }
+
+    this.userService.updateUserProfile(this.profileForm.value).subscribe(
       () => {
         alert('Profile updated successfully!');
       },

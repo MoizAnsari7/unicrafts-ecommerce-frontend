@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-address-dialog',
@@ -7,30 +6,22 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./address-dialog.component.css'],
 })
 export class AddressDialogComponent {
-  address: any = {
+  @Input() address: any = {
     street: '',
     city: '',
     state: '',
     country: '',
     postalCode: '',
   };
-  mode: 'add' | 'edit';
-
-  constructor(
-    public dialogRef: MatDialogRef<AddressDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    this.mode = data.mode;
-    if (data.mode === 'edit') {
-      this.address = { ...data.address };
-    }
-  }
+  @Input() mode: 'add' | 'edit' = 'add';
+  @Output() onSave = new EventEmitter<any>();
+  @Output() onCancel = new EventEmitter<void>();
 
   save(): void {
-    this.dialogRef.close(this.address);
+    this.onSave.emit(this.address);
   }
 
   cancel(): void {
-    this.dialogRef.close(null);
+    this.onCancel.emit();
   }
 }
