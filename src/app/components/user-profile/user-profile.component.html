@@ -1,0 +1,45 @@
+<div class="profile-container">
+  <mat-card class="profile-card">
+    <h2 class="profile-title">My Profile</h2>
+    <form class="profile-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="userProfile.username" name="username" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" [(ngModel)]="userProfile.email" name="email" />
+      </mat-form-field>
+
+      <div class="file-upload">
+        <label>Profile Picture:</label>
+        <input type="file" (change)="onFileSelected($event)" />
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="uploadProfilePicture()"
+        >
+          Upload
+        </button>
+      </div>
+
+      <div class="form-actions">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="updateProfile()"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </mat-card>
+
+  <mat-card class="address-card">
+    <h3 class="address-title">My Addresses</h3>
+    <app-address-management></app-address-management>
+  </mat-card>
+</div>

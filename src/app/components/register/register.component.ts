@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {  ToastrServices } from 'src/app/services/toastr.service';
+import { NotiflixService } from 'src/app/services/notiflix.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private userService: UserService, private toastr : ToastrServices) {
+  constructor(private fb: FormBuilder, private router: Router, private userService: UserService, private notiflix : NotiflixService) {
     this.registerForm = this.fb.group(
       {
         username: ['', [Validators.required, Validators.minLength(3)]],
@@ -44,11 +44,11 @@ export class RegisterComponent implements OnInit {
       console.log("formData" , formData);
       this.userService.register(formData).subscribe((res:any)=>{
         console.log("ressss===", res);
-        this.toastr.success(res.message);
+        this.notiflix.success(res.message);
         this.router.navigate(['/login']); 
       })
     } else {
-      this.toastr.error('Please fill all fields correctly.', 'Registration Failed');
+      this.notiflix.error('Please fill all fields correctly.');
       this.markAllAsTouched(); // Mark all fields as touched to show validation messages
     }
   }

@@ -1,0 +1,30 @@
+.address-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .address-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .address-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .address-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .no-address {
+    text-align: center;
+    margin-top: 20px;
+  }
+  

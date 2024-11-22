@@ -14,8 +14,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { MyOrderComponent } from './components/my-order/my-order.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthInterceptor } from './auth.interceptor';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { AddressManagementComponent } from './components/address-management/address-management.component';
+import { AddressDialogComponent } from './components/address-dialog/address-dialog.component';
+// Angular Material Modules
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -28,7 +39,10 @@ import { ToastrModule } from 'ngx-toastr';
     AdminComponent,
     LoginComponent,
     MyOrderComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserProfileComponent,
+    AddressManagementComponent,
+    AddressDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -38,6 +52,12 @@ import { ToastrModule } from 'ngx-toastr';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule ,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
     ToastrModule.forRoot({
       timeOut: 3000,           // Duration
       positionClass: 'toast-top-right', // Position
@@ -45,8 +65,15 @@ import { ToastrModule } from 'ngx-toastr';
       closeButton: true,       // Show close button
       progressBar: true,       // Show progress bar
     }),
+
+   
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true,
+  },  ],
+  bootstrap: [AppComponent],
+  entryComponents: [AddressDialogComponent],
 })
 export class AppModule { }

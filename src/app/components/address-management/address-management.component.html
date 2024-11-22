@@ -1,0 +1,26 @@
+<div class="address-container">
+    <h2>My Addresses</h2>
+    <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+  
+    <div *ngIf="!isLoading && addresses.length === 0" class="no-address">
+      <p>No addresses available.</p>
+      <button mat-raised-button color="primary" (click)="addAddress()">Add New Address</button>
+    </div>
+  
+    <div *ngIf="!isLoading && addresses.length > 0" class="address-list">
+      <div *ngFor="let address of addresses" class="address-card">
+        <p><strong>Street:</strong> {{ address.street }}</p>
+        <p><strong>City:</strong> {{ address.city }}</p>
+        <p><strong>State:</strong> {{ address.state }}</p>
+        <p><strong>Country:</strong> {{ address.country }}</p>
+        <p><strong>Postal Code:</strong> {{ address.postalCode }}</p>
+        <div class="address-actions">
+          <button mat-button color="accent" (click)="editAddress(address)">Edit</button>
+          <button mat-button color="warn" (click)="deleteAddress(address._id)">Delete</button>
+        </div>
+      </div>
+    </div>
+  
+    <button mat-raised-button color="primary" (click)="addAddress()">Add New Address</button>
+  </div>
+  

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -6,10 +8,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  constructor() { }
+  isAuthenticated: boolean = false;
+  private authSub!: Subscription;
+  
+  constructor(public userService : UserService,  private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this.authSub = this.userService.isAuthenticated$.subscribe((status) => {
+      this.isAuthenticated = status;
+      this.cdr.detectChanges(); 
+    });
   }
 
+
+  logout(){
+    this.userService.logout();
+  }
+
+
+  ngOnDestroy(): void {
+    if (this.authSub) {
+      this.authSub.unsubscribe();
+    }
+  }
 }
