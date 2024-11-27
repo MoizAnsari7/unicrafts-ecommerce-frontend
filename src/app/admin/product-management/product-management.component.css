@@ -1,0 +1,26 @@
+.product-management {
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    border: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #1b5e20;
+    color: white;
+    text-align: center;
+  }
+  
+  .table td {
+    text-align: center;
+  }
+  
