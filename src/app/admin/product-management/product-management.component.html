@@ -1,0 +1,51 @@
+<div class="product-management">
+    <div class="header">
+      <h2>Product Management</h2>
+      <button class="btn btn-success" (click)="openAddProductModal()">+ Add Product</button>
+    </div>
+  
+    <div *ngIf="isLoading" class="text-center">
+      <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  
+    <table class="table table-striped mt-3" *ngIf="!isLoading">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Discount</th>
+          <th>Stock</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.price  }}</td>
+          <td>{{ product.discount }}%</td>
+          <td>{{ product.stock }}</td>
+          <td>{{ product.isActive ? 'Active' : 'Inactive' }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="openEditProductModal(product)">Edit</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteProduct(product.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Add/Edit Product Modal -->
+    <app-product-modal 
+    *ngIf="isModalOpen"
+  [product]="currentProduct"
+  [mode]="modalMode"
+  [visible]="isModalOpen"
+  (onSave)="handleProductSave($event)"
+  (onClose)="closeModal()">
+</app-product-modal> 
