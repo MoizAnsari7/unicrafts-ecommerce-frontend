@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as bootstrap from 'bootstrap';
 import { CartService } from 'src/app/services/cart.service';
+import { NotiflixService } from 'src/app/services/notiflix.service';
 
 @Component({
   selector: 'app-product-list',
@@ -40,7 +41,7 @@ export class ProductListComponent  implements OnInit{
     },
   ];
      
-constructor(private cartService : CartService){}
+constructor(private cartService : CartService, private notiflixService: NotiflixService){}
 
   ngOnInit(): void {
     this.selectedProduct = this.products;
@@ -56,7 +57,7 @@ constructor(private cartService : CartService){}
   addToCart(product: any) {
     const quantity = this.quantities[product.id] || 1;
     this.cartService.addToCart(product, quantity);
-    this.toastMessage = `${product.name} added to cart with quantity: ${quantity}`;
+    this.notiflixService.success(`${product.name} added to cart with quantity: ${quantity}`);
     this.showToast = true;
     setTimeout(() => {
       this.showToast = false;

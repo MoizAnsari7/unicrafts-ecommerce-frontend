@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotiflixService } from 'src/app/services/notiflix.service';
 import { OrdersService } from 'src/app/services/order.service';
 
 
@@ -10,7 +11,7 @@ import { OrdersService } from 'src/app/services/order.service';
 export class MyOrderComponent implements OnInit {
   orders: any[] = [];
 
-  constructor(private ordersService: OrdersService) {}
+  constructor(private ordersService: OrdersService, private notiflixService : NotiflixService) {}
 
   ngOnInit(): void {
     this.orders = this.ordersService.getOrders(); // Fetch orders
@@ -33,16 +34,16 @@ export class MyOrderComponent implements OnInit {
   }
 
   trackOrder(orderId: string): void {
-    alert(`Tracking details for Order #${orderId} are unavailable right now.`);
+    this.notiflixService.warning(`Tracking details for Order #${orderId} are unavailable right now.`);
   }
 
   cancelOrder(orderId: string): void {
     const order = this.orders.find((o) => o.id === orderId);
     if (order && order.status !== 'Cancelled') {
       order.status = 'Cancelled';
-      alert(`Order #${orderId} has been cancelled.`);
+      this.notiflixService.error(`Order #${orderId} has been cancelled.`);
     } else {
-      alert(`Order #${orderId} is already cancelled.`);
+      this.notiflixService.info(`Order #${orderId} is already cancelled.`);
     }
   }
 }

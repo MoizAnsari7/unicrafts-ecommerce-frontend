@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OrdersService } from 'src/app/services/order.service';
+import { NotiflixService } from 'src/app/services/notiflix.service';
 
 @Component({
   selector: 'app-cart',
@@ -16,7 +17,8 @@ export class CartComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private ordersService: OrdersService
+    private ordersService: OrdersService,
+    private notiflixService : NotiflixService
   ) {}
 
   ngOnInit() {
@@ -45,13 +47,13 @@ export class CartComponent implements OnInit {
     this.cartService.removeFromCart(productId);
     this.cartItems = this.cartService.getCartItems(); // Refresh cart
     this.calculateTotal();
-    this.showToastNotification('Item removed from cart!');
+    this.notiflixService.warning('Item removed from cart!');
   }
 
   // Checkout and clear cart
   checkout(): void {
     if (this.cartItems.length === 0) {
-      this.showToastNotification('Cart is empty!');
+      this.notiflixService.info('Cart is empty!');
       return;
     }
 
@@ -65,7 +67,7 @@ export class CartComponent implements OnInit {
 
     this.ordersService.placeOrder(newOrder);
     this.cartItems = []; // Clear cart after checkout
-    this.showToastNotification('Order placed successfully!');
+    this.notiflixService.success('Order placed successfully!');
     this.clearCart();
   }
 

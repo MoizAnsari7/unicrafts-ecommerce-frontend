@@ -68,14 +68,4 @@
     transform: scale(1.05);
   }
   
-  /* Toast Notification */
-  .toast {
-    width: 300px;
-    font-size: 0.875rem;
-    border-radius: 5px;
-    z-index: 1050 !important;
-  }
   
-  .toast-body {
-    padding: 15px;
-  }
