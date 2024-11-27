@@ -6,7 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent {
-  activeTab: string = 'dashboard';
+  isSidebarOpen: boolean = true; // Sidebar initially open
+  activeTab: string = 'dashboard'; // Default tab
+
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
 
   setActiveTab(tab: string): void {
     this.activeTab = tab;
