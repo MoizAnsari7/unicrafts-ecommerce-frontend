@@ -9,10 +9,10 @@ import { MyOrderComponent } from './components/my-order/my-order.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { AdminComponent } from './components/admin/admin.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
-  { path: 'adminPanel', component: AdminComponent },
+  { path: 'adminPanel', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: 'register', component: RegisterComponent },
   { path: 'products', component: ProductListComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
