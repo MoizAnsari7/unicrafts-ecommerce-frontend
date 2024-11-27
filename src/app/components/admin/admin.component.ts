@@ -5,11 +5,10 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent {
+  activeTab: string = 'dashboard';
 
-  constructor() { }
-
-  ngOnInit(): void {
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
   }
-
 }

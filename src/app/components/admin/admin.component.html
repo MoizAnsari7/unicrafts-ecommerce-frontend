@@ -1,1 +1,23 @@
-<p>admin works!</p>
+<div class="admin-panel">
+    <nav class="sidebar">
+      <h2 class="sidebar-title">Admin Panel</h2>
+      <ul class="sidebar-menu">
+        <li (click)="setActiveTab('dashboard')">Dashboard</li>
+        <li (click)="setActiveTab('products')">Products</li>
+        <li (click)="setActiveTab('orders')">Orders</li>
+        <li (click)="setActiveTab('users')">Users</li>
+        <li (click)="setActiveTab('reports')">Reports</li>
+        <li (click)="setActiveTab('settings')">Settings</li>
+      </ul>
+    </nav>
+  
+    <main class="content">
+      <app-dashboard *ngIf="activeTab === 'dashboard'"></app-dashboard>
+      <app-product-management *ngIf="activeTab === 'products'"></app-product-management>
+      <app-order-management *ngIf="activeTab === 'orders'"></app-order-management>
+      <app-user-management *ngIf="activeTab === 'users'"></app-user-management>
+      <app-reports *ngIf="activeTab === 'reports'"></app-reports>
+      <app-settings *ngIf="activeTab === 'settings'"></app-settings>
+    </main>
+  </div>
+  
