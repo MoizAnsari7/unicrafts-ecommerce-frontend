@@ -1,74 +1,142 @@
 <div class="custom-modal-overlay" *ngIf="visible">
-    <div class="custom-modal">
-      <div class="modal-header">
-        <h3>{{ mode === 'add' ? 'Add Product' : 'Edit Product' }}</h3>
-        <button class="btn-close" (click)="closeModal()">×</button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
-          <div class="form-group mb-3">
-            <label for="productName">Product Name</label>
+  <div class="custom-modal">
+    <div class="modal-header">
+      <h3>{{ mode === 'add' ? 'Add Product' : 'Edit Product' }}</h3>
+      <button class="btn-close" (click)="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+        <!-- Name -->
+        <div class="form-group mb-3">
+          <label for="productName">Product Name</label>
+          <input
+            type="text"
+            id="productName"
+            formControlName="name"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <!-- Description -->
+        <div class="form-group mb-3">
+          <label for="productDescription">Description</label>
+          <textarea
+            id="productDescription"
+            formControlName="description"
+            class="form-control"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <!-- Category -->
+        <!-- <div class="form-group mb-3">
+          <label for="productCategory">Category</label>
+          <select
+            id="productCategory"
+            formControlName="category"
+            class="form-control"
+            required
+          >
+            <option *ngFor="let category of categories" [value]="category._id">
+              {{ category.name }}
+            </option>
+          </select>
+        </div> -->
+
+        <!-- Brand -->
+        <!-- <div class="form-group mb-3">
+          <label for="productBrand">Brand</label>
+          <select
+            id="productBrand"
+            formControlName="brand"
+            class="form-control"
+          >
+            <option *ngFor="let brand of brands" [value]="brand._id">
+              {{ brand.name }}
+            </option>
+          </select>
+        </div> -->
+
+        <!-- Price -->
+        <div class="form-group mb-3">
+          <label for="productPrice">Price</label>
+          <input
+            type="number"
+            id="productPrice"
+            formControlName="price"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <!-- Discount Price -->
+        <div class="form-group mb-3">
+          <label for="productDiscountPrice">Discount Price</label>
+          <input
+            type="number"
+            id="productDiscountPrice"
+            formControlName="discountPrice"
+            class="form-control"
+          />
+        </div>
+
+        <!-- Stock -->
+        <div class="form-group mb-3">
+          <label for="productStock">Stock</label>
+          <input
+            type="number"
+            id="productStock"
+            formControlName="stock"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <!-- Images -->
+        <div class="form-group mb-3">
+          <label for="productImages">Images</label>
+          <div *ngFor="let image of images.controls; let i = index">
             <input
               type="text"
-              id="productName"
-              formControlName="name"
-              class="form-control"
-              required
+              [formControlName]="i"
+              class="form-control mb-2"
+              placeholder="Image URL"
             />
+            <button class="btn btn-danger btn-sm" (click)="removeImage(i)">Remove</button>
           </div>
-          <div class="form-group mb-3">
-            <label for="productDescription">Description</label>
-            <textarea
-              id="productDescription"
-              formControlName="description"
-              class="form-control"
-              rows="3"
-            ></textarea>
+          <button type="button" class="btn btn-secondary mt-2" (click)="addImage()">Add Image</button>
+        </div>
+
+        <!-- Attributes -->
+        <div class="form-group mb-3">
+          <label>Attributes</label>
+          <div class="row">
+            <div class="col">
+              <input
+                type="text"
+                formControlName="color"
+                class="form-control"
+                placeholder="Color"
+              />
+            </div>
+            <div class="col">
+              <input
+                type="text"
+                formControlName="size"
+                class="form-control"
+                placeholder="Size"
+              />
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <label for="productPrice">Price</label>
-            <input
-              type="number"
-              id="productPrice"
-              formControlName="price"
-              class="form-control"
-              required
-            />
-          </div>
-          <div class="form-group mb-3">
-            <label for="productDiscount">Discount (%)</label>
-            <input
-              type="number"
-              id="productDiscount"
-              formControlName="discount"
-              class="form-control"
-            />
-          </div>
-          <div class="form-group mb-3">
-            <label for="productStock">Stock Quantity</label>
-            <input
-              type="number"
-              id="productStock"
-              formControlName="stock"
-              class="form-control"
-              required
-            />
-          </div>
-          <div class="form-group mb-3">
-            <label for="productImage">Image URL</label>
-            <input
-              type="text"
-              id="productImage"
-              formControlName="imageUrl"
-              class="form-control"
-            />
-          </div>
-          <div class="text-end">
-            <button type="button" class="btn btn-secondary me-2" (click)="closeModal()">Cancel</button>
-            <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Save</button>
-          </div>
-        </form>
-      </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="text-end">
+          <button type="button" class="btn btn-secondary me-2" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Save</button>
+        </div>
+      </form>
     </div>
   </div>
-  
+</div>

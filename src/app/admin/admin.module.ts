@@ -7,6 +7,8 @@ import { ProductManagementComponent } from './product-management/product-managem
 import { RouterModule } from '@angular/router';
 import { ProductModalComponent } from './product-modal/product-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '../interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -23,6 +25,13 @@ import { ReactiveFormsModule } from '@angular/forms';
       { path: '', component: AdminComponent }
     ]),
     AdminRoutingModule
-  ]
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
 })
 export class AdminModule { }

@@ -6,27 +6,32 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:3000/api/products'; // Replace with your actual API URL
+  private apiUrl = 'http://localhost:3000/api/product'; // Backend API URL
 
   constructor(private http: HttpClient) {}
 
-  // Fetch all products
-  getProducts(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}`);
+  // Fetch all products with optional filters
+  getProducts(filters?: any): Observable<any> {
+    return this.http.get(this.apiUrl, { params: filters });
+  }
+
+  // Get a single product by ID
+  getProductById(productId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${productId}`);
   }
 
   // Add a new product
   addProduct(product: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, product);
+    return this.http.post(`${this.apiUrl}/addProduct`, product);
   }
 
   // Update an existing product
-  updateProduct(productId: string, product: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${productId}`, product);
+  updateProduct(product: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${product.id}`, product);
   }
 
   // Delete a product
   deleteProduct(productId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${productId}`);
+    return this.http.delete(`${this.apiUrl}/${productId}`);
   }
 }
