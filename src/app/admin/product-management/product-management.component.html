@@ -45,6 +45,7 @@
     *ngIf="isModalOpen"
   [product]="currentProduct"
   [mode]="modalMode"
+  [categories]="categories"
   [visible]="isModalOpen"
   (onSave)="handleProductSave($event)"
   (onClose)="closeModal()">

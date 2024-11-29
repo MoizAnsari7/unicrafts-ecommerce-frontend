@@ -7,7 +7,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-product-modal',
@@ -33,7 +33,8 @@ export class ProductModalComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['product'] && changes['product'].currentValue) {
+    // Reinitialize form if product data changes
+    if (changes['product'] && this.product) {
       this.initForm();
     }
   }
@@ -43,15 +44,15 @@ export class ProductModalComponent implements OnInit, OnChanges {
     this.productForm = this.fb.group({
       name: [this.product?.name || '', [Validators.required]],
       description: [this.product?.description || ''],
-      // category: [this.product?.category || '', [Validators.required]],
-      // brand: [this.product?.brand || ''],
+      category: [this.product?.category || '', [Validators.required]],
+      brand: [this.product?.brand || ''],
       price: [this.product?.price || 0, [Validators.required, Validators.min(0)]],
       discountPrice: [this.product?.discountPrice || 0],
       stock: [this.product?.stock || 0, [Validators.required, Validators.min(0)]],
       rating: [this.product?.rating || 0],
       imageUrl: [''], // Optional single image URL field
       images: this.fb.array(
-        (this.product?.images || []).map((url:any) => this.fb.control(url))
+        (this.product?.images || []).map((url: any) => this.fb.control(url, [Validators.required]))
       ), // Multiple images array
       attributes: this.fb.group({
         color: [this.product?.attributes?.color || ''],
@@ -60,14 +61,9 @@ export class ProductModalComponent implements OnInit, OnChanges {
     });
   }
 
-  // Initialize images array
-  initImages(images: string[]): FormControl[] {
-    return images.map((url) => this.fb.control(url));
-  }
-
   // Add a new image URL field
   addImage(): void {
-    this.images.push(this.fb.control(''));
+    this.images.push(this.fb.control('', [Validators.required]));
   }
 
   // Remove an image URL field
@@ -78,7 +74,14 @@ export class ProductModalComponent implements OnInit, OnChanges {
   // Save the product
   saveProduct(): void {
     if (this.productForm.valid) {
-      this.onSave.emit(this.productForm.value);
+      const formValue = this.productForm.value;
+
+      // Emit save event with the form value
+      this.onSave.emit({
+        ...formValue,
+        mode: this.mode, // Send mode to differentiate between add/edit
+      });
+
       this.closeModal();
     }
   }
@@ -86,6 +89,10 @@ export class ProductModalComponent implements OnInit, OnChanges {
   // Close the modal
   closeModal(): void {
     this.onClose.emit();
+
+    // Reset form on modal close
+    this.productForm.reset();
+    this.initForm(); // Reinitialize the form for next use
   }
 
   // Getter for images FormArray
