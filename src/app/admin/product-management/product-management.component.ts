@@ -14,6 +14,7 @@ export class ProductManagementComponent implements OnInit {
   isModalOpen: boolean = false; // Modal visibility state
   modalMode: 'add' | 'edit' = 'add'; // Determines if modal is in 'add' or 'edit' mode
   currentProduct: any | null = null; // The product being edited (or null for add mode)
+  categories:any = [];
 
   constructor(
     private productService: ProductService,

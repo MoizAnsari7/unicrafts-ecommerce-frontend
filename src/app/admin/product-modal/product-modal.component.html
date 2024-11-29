@@ -29,20 +29,23 @@
           ></textarea>
         </div>
 
-        <!-- Category -->
-        <!-- <div class="form-group mb-3">
+         <!-- Category -->
+         <div class="form-group mb-3">
           <label for="productCategory">Category</label>
           <select
             id="productCategory"
             formControlName="category"
             class="form-control"
-            required
           >
             <option *ngFor="let category of categories" [value]="category._id">
               {{ category.name }}
             </option>
           </select>
-        </div> -->
+          <div *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched" class="text-danger">
+            Please select a category.
+          </div>
+        </div>
+
 
         <!-- Brand -->
         <!-- <div class="form-group mb-3">

@@ -43,15 +43,17 @@ export class ProductListComponent  implements OnInit{
      
 constructor(private cartService : CartService, private notiflixService: NotiflixService){}
 
+showToast = false;
+toastMessage = '';
+selectedProduct: any = null;
+quantities: { [key: number]: number } = {}; // Store quantity for each product by ID
+addedToCart: { [key: number]: boolean } = {}; // Store if a product is added to cart
+
   ngOnInit(): void {
     this.selectedProduct = this.products;
+    
   }
 
-  showToast = false;
-  toastMessage = '';
-  selectedProduct: any = null;
-  quantities: { [key: number]: number } = {}; // Store quantity for each product by ID
-  addedToCart: { [key: number]: boolean } = {}; // Store if a product is added to cart
 
   // Handle adding to cart
   addToCart(product: any) {

@@ -1,12 +1,12 @@
-<div class="admin-panel">
+<div class="admin-panel" *ngIf="isAdmin">
   <!-- Navbar with Toggle Button (Only visible on mobile) -->
   <nav class="navbar">
-    <button class="sidebar-toggle" (click)="toggleSidebar()">☰</button>
     <h2 class="navbar-title">Admin Panel</h2>
 
     <!-- Collapsible Navbar Menu -->
-    <ul class="navbar-menu" [ngClass]="{'navbar-open': isSidebarOpen}">
+    <ul class="navbar-menu">
       <li (click)="setActiveTab('dashboard')">Dashboard</li>
+      <li (click)="setActiveTab('category')">Category</li>
       <li (click)="setActiveTab('products')">Products</li>
       <li (click)="setActiveTab('orders')">Orders</li>
       <li (click)="setActiveTab('users')">Users</li>
@@ -18,6 +18,7 @@
   <!-- Main Content -->
   <main class="content">
     <app-product-management *ngIf="activeTab === 'products'"></app-product-management>
+    <app-category-managment *ngIf="activeTab === 'category'"></app-category-managment>
     <!-- More components based on activeTab -->
   </main>
 </div>
