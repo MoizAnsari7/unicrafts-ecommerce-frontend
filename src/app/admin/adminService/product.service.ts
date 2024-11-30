@@ -26,8 +26,10 @@ export class ProductService {
   }
 
   // Update an existing product
-  updateProduct(product: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${product.id}`, product);
+  updateProduct(productId: any, productData:any): Observable<any> {
+    console.log("product from service", productId,productData);
+    
+    return this.http.put<any>(`${this.apiUrl}/${productId}`, productData);
   }
 
   // Delete a product

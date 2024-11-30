@@ -29,4 +29,9 @@ export class NotiflixService {
   warning(message: string) {
     Notiflix.Notify.warning(message);
   }
+
+  confirm(){
+   return alert( `Are you sure?,
+    Do you really want to delete this product?`)
+  }
 }
