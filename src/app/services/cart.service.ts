@@ -1,19 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private cartItems: any[] = [];
+  private apiUrl = 'http://localhost:3000/api/cart'; // Replace with your actual API URL
+  cartItems:any;
+  constructor(private http: HttpClient) {}
 
-  // Add product to cart
-  addToCart(product: any, quantity: number) {
-    const existingItem = this.cartItems.find((item) => item.id === product.id);
-    if (existingItem) {
-      existingItem.quantity += quantity; // Update quantity if product already in cart
-    } else {
-      this.cartItems.push({ ...product, quantity });
-    }
+  addProductToCart(productId: string, quantity: number): Observable<any> {
+    return this.http.post(this.apiUrl, { productId, quantity });
+  }
+
+  getMyCartItems(){
+return this.http.get(this.apiUrl);
   }
 
   // Get cart items
@@ -23,7 +25,7 @@ export class CartService {
 
   // Remove product from cart
   removeFromCart(productId: number) {
-    this.cartItems = this.cartItems.filter((item) => item.id !== productId);
+    this.cartItems = this.cartItems.filter((item:any) => item.id !== productId);
   }
 
   // Clear cart after checkout

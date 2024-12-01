@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
 import { CategoryManagmentComponent } from './category-managment/category-managment.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { CategoryManagmentComponent } from './category-managment/category-managm
     AdminComponent,
     ProductManagementComponent,
     ProductModalComponent,
-    CategoryManagmentComponent, 
+    CategoryManagmentComponent,
+    AdminDashboardComponent, 
   ],
  
   imports: [

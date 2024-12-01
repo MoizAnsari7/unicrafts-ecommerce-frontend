@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit {
   logout(){
     this.userService.logout();
     this.notiflixService.info("Logout SuccessFully")
+    window.location.href = "/login"
   }
 
 
