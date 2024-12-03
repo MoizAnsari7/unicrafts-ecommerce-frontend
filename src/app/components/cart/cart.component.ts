@@ -29,8 +29,9 @@ export class CartComponent implements OnInit {
 
   getCartItems(){
     this.cartService.getMyCartItems().subscribe((res:any)=>{
-      console.log("ressssss",res.items);
+      console.log("ressssss",res);
       this.cartItems = res.items;
+      this.totalAmount = res.total;
     })
   }
 
@@ -52,12 +53,13 @@ export class CartComponent implements OnInit {
   // }
 
   // Remove product from cart
-  // removeItem(productId: any) {
-  //   this.cartService.removeFromCart(productId);
-  //   this.cartItems = this.cartService.getCartItems(); // Refresh cart
-  //   this.calculateTotal();
-  //   this.notiflixService.warning('Item removed from cart!');
-  // }
+  removeItem(item: any) {
+    this.cartService.removeFromCart(item.productId).subscribe((res:any)=>{
+      this.notiflixService.warning(res.message);
+this.getCartItems()
+    })
+    // this.calculateTotal();
+  }
 
   // Checkout and clear cart
   // checkout(): void {
@@ -80,19 +82,52 @@ export class CartComponent implements OnInit {
   //   this.clearCart();
   // }
 
-  // incrementQuantity(item: any) {
-  //   item.quantity += 1;
-  //   this.calculateTotal();
-  // }
+  updateQuantity(item: any, action: 'increment' | 'decrement') {
+    let quantity = item.quantity;
+  
+    // Adjust quantity based on the action
+    if (action === 'increment') {
+      quantity += 1;
+    } else if (action === 'decrement') {
+      quantity -= 1;
+    }
+  
+    // Remove item if quantity is 0
+    if (quantity <= 0) {
+      this.cartService.removeFromCart(item.productId).subscribe(
+        (res: any) => {
+          this.notiflixService.success('Item removed successfully:');
+          this.getCartItems(); // Refresh the cart items
+        },
+        (error) => {
+          this.notiflixService.error('Error removing item:');
+        }
+      );
+      return; // Exit the method early since item is removed
+    }
+  
+    // Update the quantity
+    const payload = { quantity }; // Create payload object
+    this.cartService.updateQuantity(item.productId, payload).subscribe(
+      (res: any) => {
+        this.notiflixService.success('Quantity updated successfully:');
+        this.getCartItems(); // Refresh the cart items
+      },
+      (error) => {
+        this.notiflixService.error('Error updating quantity:');
+      }
+    );
+  }
+  
+ 
 
-  // decrementQuantity(item: any) {
-  //   if (item.quantity > 1) {
-  //     item.quantity -= 1;
-  //     this.calculateTotal();
-  //   } else {
-  //     this.removeItem(item.id);
-  //   }
-  // }
+  decrementQuantity(item: any) {
+    if (item.quantity > 1) {
+      item.quantity -= 1;
+    } else {
+      this.removeItem(item.id);
+    }
+  }
 
   clearCart() {
     this.cartItems = [];

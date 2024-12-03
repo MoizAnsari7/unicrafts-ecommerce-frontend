@@ -15,6 +15,7 @@ export class ProductListComponent  implements OnInit{
   selectedProduct: any = null;
   quantities: { [key: string]: number } = {};
   addedToCart: { [key: string]: boolean } = {};
+  cartItems : any;
 
   constructor(private productService: ProductService, private notiflixService: NotiflixService, private cartService : CartService,  private cdr: ChangeDetectorRef ) {}
 
@@ -48,10 +49,16 @@ export class ProductListComponent  implements OnInit{
   addToCart(product: any): void {
     const quantity = this.quantities[product._id] || 1;
 
-    this.cartService.addProductToCart(product._id, quantity).subscribe(
+    this.cartService.addProductToCart(product._id, quantity, product.price).subscribe(
       (res: any) => {
         this.addedToCart[product._id] = true;
         this.quantities[product._id] = quantity;
+
+        this.cartService.getMyCartItems().subscribe((items:any) => {
+          this.cartItems = items.items;
+          this.cartService.cartItems.next(this.cartItems.length);
+           });
+           
         this.notiflixService.success(`Added ${product.name} to the cart!`);
       },
       (error: any) => {
