@@ -20,23 +20,23 @@
                 <div class="btn-group" role="group">
                   <button
                     class="btn btn-secondary btn-sm"
+                    (click)="updateQuantity(item, 'decrement')"
                     >
-                    <!-- (click)="decrementQuantity(item)" -->
                     -
                   </button>
                   <span class="px-3">{{ item.quantity }}</span>
                   <button
                     class="btn btn-secondary btn-sm"
+                    (click)="updateQuantity(item, 'increment')"
                     >
-                    <!-- (click)="incrementQuantity(item)" -->
                     +
                   </button>
                 </div>
                 <!-- Remove Button -->
                 <button
                   class="btn btn-danger btn-sm"
+                  (click)="removeItem(item)"
                   >
-                  <!-- (click)="removeItem(item.id)" -->
                   Remove
                 </button>
               </div>

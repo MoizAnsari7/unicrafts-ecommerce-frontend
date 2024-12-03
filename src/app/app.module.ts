@@ -19,6 +19,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { AddressManagementComponent } from './components/address-management/address-management.component';
 import { AddressDialogComponent } from './components/address-dialog/address-dialog.component';
 import { AdminModule } from './admin/admin.module';
+import { DefaultValuePipe } from './pipe/default-value.pipe';
 
 
 
@@ -36,6 +37,7 @@ import { AdminModule } from './admin/admin.module';
     UserProfileComponent,
     AddressManagementComponent,
     AddressDialogComponent,
+    DefaultValuePipe,
    
    
   ],
