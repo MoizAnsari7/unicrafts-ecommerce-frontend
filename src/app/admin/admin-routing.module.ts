@@ -8,16 +8,17 @@ import { CategoryManagmentComponent } from './category-managment/category-managm
 
 const routes: Routes = [
   {
-    path: 'admin', // Base path will match `adminPanel` from AppRoutingModule
+    path: 'admin',
     component: AdminComponent,
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Redirect to dashboard by default
       { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'products', component: ProductManagementComponent },
       { path: 'category', component: CategoryManagmentComponent },
     ],
   },
 ];
+
 
 
 @NgModule({

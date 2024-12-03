@@ -38,6 +38,31 @@ return this.http.get(this.apiUrl);
     return this.http.put(`${this.apiUrl}/${productId}`, payload);
   }
 
+
+  syncGuestCartToDatabase() {
+    const localCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+  
+    if (localCart.length > 0) {
+      this.addMultipleItemsToCart(localCart).subscribe(
+        (res: any) => {
+          console.log('Guest cart synced to database:', res);
+          localStorage.removeItem('guestCart'); // Clear localStorage
+          // Optionally, update the cart observable to refresh the UI
+          this.getMyCartItems().subscribe((items: any) => {
+            this.cartItems.next(items.items.length);
+          });
+        },
+        (error: any) => {
+          console.error('Error syncing guest cart to database:', error);
+        }
+      );
+    }
+  }
+  
+  addMultipleItemsToCart(items: any[]): Observable<any> {
+    return this.http.post(`${this.apiUrl}/multiple`, { items });
+  }
+  
   // Clear cart after checkout
   clearCart() {
     

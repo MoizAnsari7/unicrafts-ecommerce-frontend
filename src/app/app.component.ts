@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import * as jwt_decode from 'jwt-decode';
-
 
 @Component({
   selector: 'app-root',
@@ -14,7 +12,7 @@ export class AppComponent implements OnInit {
   constructor(private router: Router){}
 
 ngOnInit(): void {
-   
+  this.router.navigate(['/product']);
 }
 
 

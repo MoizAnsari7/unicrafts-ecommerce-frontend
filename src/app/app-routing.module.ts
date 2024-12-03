@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { CartComponent } from './components/cart/cart.component';
@@ -12,16 +11,25 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/products', pathMatch: 'full' }, // Default Route
   { path: 'register', component: RegisterComponent },
-  { path: 'products', component: ProductListComponent },
+  { path: 'product', component: ProductListComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
-  { path: 'cart', component: CartComponent , canActivate:[AuthGuard] },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'my-order', component: MyOrderComponent , canActivate:[AuthGuard] },
-  { path: 'user-profile', component: UserProfileComponent , canActivate:[AuthGuard] },
+  { path: 'my-order', component: MyOrderComponent, canActivate: [AuthGuard] },
+  { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard] },
+  
+  // Default Route: redirect empty path to 'product'
+  { path: '', redirectTo: 'product', pathMatch: 'full' },
+
+  // Catch-all route to handle any invalid routes (Wildcard route)
+  { path: '**', redirectTo: 'product' }, 
+
+  // Admin Panel route
   { path: 'adminPanel', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
 ];
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

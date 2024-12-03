@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChangeDetectorRef, Injectable, OnInit } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { CartService } from './cart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class UserService implements OnInit {
 
   private apiUrl = 'http://localhost:3000/api/users'; // replace with your API base URL
 
-  constructor(private http: HttpClient, ) {
+  constructor(private http: HttpClient, private cartService:CartService ) {
     this.tokenCheck();
   }
 
@@ -61,6 +62,7 @@ export class UserService implements OnInit {
       tap((response: any) => {
         const token = response.token; // Assuming the API returns a token
         localStorage.setItem('token', token);
+        this.cartService.syncGuestCartToDatabase();
         this.tokenCheck(); // Trigger state update
       })
     );
