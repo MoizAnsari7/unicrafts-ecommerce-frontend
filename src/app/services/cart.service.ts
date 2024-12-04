@@ -1,33 +1,45 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private cartItems: any[] = [];
+  private apiUrl = 'http://localhost:3000/api/cart'; // Replace with your actual API URL
+  
 
-  // Add product to cart
-  addToCart(product: any, quantity: number) {
-    const existingItem = this.cartItems.find((item) => item.id === product.id);
-    if (existingItem) {
-      existingItem.quantity += quantity; // Update quantity if product already in cart
-    } else {
-      this.cartItems.push({ ...product, quantity });
-    }
+  cartItems = new BehaviorSubject<number>(0); // Tracks cart item count
+  cartItemsCount$ = this.cartItems.asObservable(); // Observable for UI binding
+  
+  constructor(private http: HttpClient) {}
+
+  updateCartItemsCount(count: number): void {
+    this.cartItems.next(count); // Update count in BehaviorSubject
   }
 
-  // Get cart items
-  getCartItems() {
-    return this.cartItems;
+  addProductToCart(productId: string, quantity: number, price : number): Observable<any> {
+    return this.http.post(this.apiUrl, { productId, quantity, price });
   }
+
+  getMyCartItems(){
+return this.http.get(this.apiUrl);
+  }
+
 
   // Remove product from cart
   removeFromCart(productId: number) {
-    this.cartItems = this.cartItems.filter((item) => item.id !== productId);
+   return this.http.delete(`${this.apiUrl}/${productId}`)
+  }
+
+
+  // Quantity Update Into cart
+  updateQuantity(productId: number, payload: { quantity: number }) {
+    return this.http.put(`${this.apiUrl}/${productId}`, payload);
   }
 
   // Clear cart after checkout
   clearCart() {
-    this.cartItems = [];
+    
   }
 }

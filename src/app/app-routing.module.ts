@@ -9,10 +9,10 @@ import { MyOrderComponent } from './components/my-order/my-order.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { AdminComponent } from './admin/admin.component';
+
 
 const routes: Routes = [
-  { path: 'adminPanel', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+  { path: '', redirectTo: '/products', pathMatch: 'full' }, // Default Route
   { path: 'register', component: RegisterComponent },
   { path: 'products', component: ProductListComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'my-order', component: MyOrderComponent , canActivate:[AuthGuard] },
   { path: 'user-profile', component: UserProfileComponent , canActivate:[AuthGuard] },
-  { path: '', redirectTo: '/products', pathMatch: 'full' }, // Default Route
+  { path: 'adminPanel', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
 ];
 
 @NgModule({

@@ -9,13 +9,17 @@ import { ProductModalComponent } from './product-modal/product-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
+import { CategoryManagmentComponent } from './category-managment/category-managment.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({
   declarations: [ 
     AdminComponent,
     ProductManagementComponent,
-    ProductModalComponent, 
+    ProductModalComponent,
+    CategoryManagmentComponent,
+    AdminDashboardComponent, 
   ],
  
   imports: [

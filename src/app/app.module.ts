@@ -18,21 +18,16 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AddressManagementComponent } from './components/address-management/address-management.component';
 import { AddressDialogComponent } from './components/address-dialog/address-dialog.component';
-// Angular Material Modules
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatCardModule } from '@angular/material/card';
 import { AdminModule } from './admin/admin.module';
+import { DefaultValuePipe } from './pipe/default-value.pipe';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    ProductListComponent,
+     NavbarComponent,
+     ProductListComponent,
     ProductDetailsComponent,
     CartComponent,
     CheckoutComponent,
@@ -42,6 +37,8 @@ import { AdminModule } from './admin/admin.module';
     UserProfileComponent,
     AddressManagementComponent,
     AddressDialogComponent,
+    DefaultValuePipe,
+   
    
   ],
   imports: [
@@ -53,12 +50,6 @@ import { AdminModule } from './admin/admin.module';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule ,
-    MatButtonModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatCardModule,  
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

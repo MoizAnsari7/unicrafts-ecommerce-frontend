@@ -20,23 +20,23 @@
                 <div class="btn-group" role="group">
                   <button
                     class="btn btn-secondary btn-sm"
-                    (click)="decrementQuantity(item)"
-                  >
+                    (click)="updateQuantity(item, 'decrement')"
+                    >
                     -
                   </button>
                   <span class="px-3">{{ item.quantity }}</span>
                   <button
                     class="btn btn-secondary btn-sm"
-                    (click)="incrementQuantity(item)"
-                  >
+                    (click)="updateQuantity(item, 'increment')"
+                    >
                     +
                   </button>
                 </div>
                 <!-- Remove Button -->
                 <button
                   class="btn btn-danger btn-sm"
-                  (click)="removeItem(item.id)"
-                >
+                  (click)="removeItem(item)"
+                  >
                   Remove
                 </button>
               </div>
@@ -47,7 +47,10 @@
   
       <div class="text-end mt-4">
         <h4>Total Amount: ₹{{ totalAmount }}</h4>
-        <button class="btn btn-success mt-2" (click)="checkout()">Checkout</button>
+        <button class="btn btn-success mt-2" 
+        >
+        <!-- (click)="checkout()" -->
+          Checkout</button>
       </div>
     </div>
   

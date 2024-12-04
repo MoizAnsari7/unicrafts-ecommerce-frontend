@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:3000/api/product'; // Backend API URL
+  private apiUrl = 'http://localhost:3000/api/products'; // Backend API URL
 
   constructor(private http: HttpClient) {}
 
@@ -26,8 +26,10 @@ export class ProductService {
   }
 
   // Update an existing product
-  updateProduct(product: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${product.id}`, product);
+  updateProduct(productId: any, productData:any): Observable<any> {
+    console.log("product from service", productId,productData);
+    
+    return this.http.put<any>(`${this.apiUrl}/${productId}`, productData);
   }
 
   // Delete a product

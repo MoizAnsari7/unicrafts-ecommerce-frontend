@@ -1,95 +1,101 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, AfterViewChecked } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { NotiflixService } from 'src/app/services/notiflix.service';
 
 @Component({
   selector: 'app-product-modal',
   templateUrl: './product-modal.component.html',
   styleUrls: ['./product-modal.component.css'],
 })
-export class ProductModalComponent implements OnInit, OnChanges {
-  @Input() product: any = null; // The product being edited or added
-  @Input() mode: 'add' | 'edit' = 'add'; // The mode: 'add' or 'edit'
-  @Input() visible: boolean = false; // Controls modal visibility
-  @Input() categories: any[] = []; // List of categories for selection
-  @Input() brands: any[] = []; // List of brands for selection
+export class ProductModalComponent implements OnInit, OnDestroy {
+  @Input() product: any = null; // Product being edited or added
+  @Input() mode: 'add' | 'edit' = 'add'; // Mode: 'add' or 'edit'
+  @Input() visible: boolean = false; // Modal visibility state
+  @Input() categories: any[] = []; // Categories for dropdown
 
-  @Output() onSave: EventEmitter<any> = new EventEmitter(); // Emits when saving
-  @Output() onClose: EventEmitter<void> = new EventEmitter(); // Emits when closing
+  @Output() onSave: EventEmitter<any> = new EventEmitter(); // Emits on save
+  @Output() onClose: EventEmitter<void> = new EventEmitter(); // Emits on close
 
-  productForm!: FormGroup; // Reactive form
+  productForm!: FormGroup; // Form group for product
+  images!: FormArray; // Form array for images
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private notiflixService: NotiflixService) {}
 
   ngOnInit(): void {
-    this.initForm();
+    this.initForm();   
+    this.productForm.patchValue({
+      category : "Jeans"
+    }) 
   }
+  
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['product'] && changes['product'].currentValue) {
-      this.initForm();
-    }
-  }
 
-  // Initialize the reactive form
+
+
+  // Initialize the form
   initForm(): void {
     this.productForm = this.fb.group({
       name: [this.product?.name || '', [Validators.required]],
-      description: [this.product?.description || ''],
-      // category: [this.product?.category || '', [Validators.required]],
-      // brand: [this.product?.brand || ''],
+      description: [this.product?.description || '', Validators.required],
+      category: [this.product?.category , Validators.required], // Category binding
       price: [this.product?.price || 0, [Validators.required, Validators.min(0)]],
       discountPrice: [this.product?.discountPrice || 0],
       stock: [this.product?.stock || 0, [Validators.required, Validators.min(0)]],
-      rating: [this.product?.rating || 0],
-      imageUrl: [''], // Optional single image URL field
       images: this.fb.array(
-        (this.product?.images || []).map((url:any) => this.fb.control(url))
-      ), // Multiple images array
+        (this.product?.images || []).map(() => this.fb.control(null)),
+        Validators.required
+      ),
       attributes: this.fb.group({
         color: [this.product?.attributes?.color || ''],
         size: [this.product?.attributes?.size || ''],
       }),
     });
+
+    this.images = this.productForm.get('images') as FormArray;
   }
 
-  // Initialize images array
-  initImages(images: string[]): FormControl[] {
-    return images.map((url) => this.fb.control(url));
-  }
 
-  // Add a new image URL field
+
+
+  // Add an image field
   addImage(): void {
-    this.images.push(this.fb.control(''));
+    this.images.push(this.fb.control(null, Validators.required));
   }
 
-  // Remove an image URL field
+  // Handle image input change
+  handleImageInput(event: Event, index: number): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      this.images.at(index).setValue(fileInput.files[0]);
+    }
+  }
+
+  // Remove an image
   removeImage(index: number): void {
     this.images.removeAt(index);
   }
 
-  // Save the product
+  // Save product data
   saveProduct(): void {
     if (this.productForm.valid) {
-      this.onSave.emit(this.productForm.value);
-      this.closeModal();
+      const formData = { ...this.productForm.value };
+      formData.images = formData.images.map((file: File) => file.name || file); // Convert images to file names or keep existing ones
+      console.log('Attributes:', this.productForm.get('attributes')?.value);
+      this.onSave.emit(formData);
+    } else {
+      this.notiflixService.error('Please fill all required fields.');
     }
+    this.closeModal();
   }
 
-  // Close the modal
+  // Close modal
   closeModal(): void {
     this.onClose.emit();
+    this.productForm.reset();
+    this.initForm(); // Reinitialize form after closing
   }
 
-  // Getter for images FormArray
-  get images(): FormArray {
-    return this.productForm.get('images') as FormArray;
+  ngOnDestroy(): void {
+    this.productForm.reset();
   }
 }
