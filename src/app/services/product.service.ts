@@ -37,4 +37,9 @@ export class ProductService {
   getAllProducts(): Observable<any[]>{
     return this.http.get<any[]>(`${this.baseUrl}/allProducts`);
   }
+
+
+  getProductById(productId:any){
+return  this.http.get(`${this.baseUrl}/${productId}`)
+  }
 }

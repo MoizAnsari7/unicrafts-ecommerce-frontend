@@ -10,6 +10,69 @@
   .card-img-top {
     border-bottom: 1px solid #ddd;
   }
+  .card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(224, 115, 115, 0.15);
+  }
+  
+  .card-title {
+    font-size: 1.1rem;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .btn-group .btn {
+    min-width: 35px;
+    /* border-radius: 150px; */
+  }
+  
+  .toast {
+    animation: fadeIn 0.5s ease-in-out, fadeOut 0.5s ease-in-out 4.5s;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      margin-bottom: 1.5rem;
+    }
+  
+    .card-title {
+      font-size: 1rem;
+    }
+  
+    .btn-group {
+      flex-direction: row;
+    }
+  }
   
   .btn-group .btn {
     width: 35px;

@@ -29,7 +29,7 @@ export class CartComponent implements OnInit {
 
   getCartItems(){
     this.cartService.getMyCartItems().subscribe((res:any)=>{
-      console.log("ressssss",res);
+      console.log("cart items ressssss",res);
       this.cartItems = res.items;
       this.totalAmount = res.total;
     })

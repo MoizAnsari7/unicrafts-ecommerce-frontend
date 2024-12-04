@@ -12,38 +12,56 @@
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
   }
   
-  /* Image container */
   .card-img-container {
-    position: relative;
-    overflow: hidden;
+    height: 250px; /* Consistent height for images */
+    overflow: hidden; /* Ensures no overflow of image */
+    position: relative; /* For hover effect */
   }
   
   .card-img-container img {
     width: 100%;
-    height: 350px;
-    object-fit: cover;
-    transition: transform 0.8s ease;
+    height: 100%;
+    object-fit: cover; /* Ensures the image fits properly */
+    transition: transform 0.5s ease; /* Smooth hover effect */
   }
   
   .card-img-container:hover img {
-    transform: scale(1.1);
+    transform: scale(1.1); /* Zoom effect on hover */
   }
   
-  /* Card title */
+  .card {
+    height: 100%; /* Ensures equal height for all cards */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space between body and footer */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Avoid overflow of content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth hover */
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Elevated shadow on hover */
+    transform: translateY(-5px); /* Subtle lift on hover */
+  }
+  
   .card-title {
-    font-size: 1.25rem;
-    color: #333;
+    font-size: 1.1rem;
     font-weight: bold;
-    margin: 10px 0;
+    color: #333;
   }
   
-  /* Card footer buttons */
   .card-footer button {
-    width: 45%;
     font-size: 0.9rem;
-    font-weight: 600;
+    padding: 0.4rem 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth button hover */
   }
   
+  .card-footer button:hover {
+    background-color: #007bff; /* Primary hover color */
+    color: #fff; /* Text color */
+  }
+   
 
 
   /* Modal Image */

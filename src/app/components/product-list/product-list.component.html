@@ -11,12 +11,11 @@
     <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let product of products">
       <div class="card product-card shadow-sm">
         <div class="card-img-container">
-        {{ product.imagePath}}
           <img
-          [src]="product.imagePath || 'assets/placeholder.png'"
-          class="card-img-top img-fluid"
-          alt="{{ product.name || 'Unnamed Product' }}"
-        />
+            [src]="product.imagePath || 'assets/placeholder.png'"
+            class="card-img-top img-fluid"
+            alt="{{ product.name || 'Unnamed Product' }}"
+          />
         </div>
         <div class="card-body text-center">
           <h5 class="card-title">{{ product.name || "Unnamed Products" }}</h5>
@@ -26,12 +25,23 @@
           <h6 class="text-success fw-bold">₹{{ product.price || "N/A" }}</h6>
         </div>
         <div class="card-footer text-center">
-          <button class="btn btn-primary btn-sm rounded-pill me-2" (click)="openModal(product)">View Details</button>
-          <button class="btn btn-outline-success btn-sm rounded-pill" (click)="addToCart(product)"> {{ addedToCart[product._id] ? 'Added' : 'Add to Cart' }}</button>
+          <button
+            class="btn btn-primary btn-sm rounded-pill me-2"
+            [routerLink]="['/product', product._id]"
+          >
+            View Details
+          </button>
+          <button
+            class="btn btn-outline-success btn-sm rounded-pill"
+            (click)="addToCart(product)"
+          >
+            {{ addedToCart[product._id] ? 'Added' : 'Add to Cart' }}
+          </button>
         </div>
       </div>
     </div>
   </div>
+  
   
 </div>
 
