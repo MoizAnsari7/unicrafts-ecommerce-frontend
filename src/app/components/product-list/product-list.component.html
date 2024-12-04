@@ -12,10 +12,10 @@
       <div class="card product-card shadow-sm">
         <div class="card-img-container">
           <img
-            [src]="product.image || 'assets/placeholder.png'"
-            class="card-img-top img-fluid"
-            alt="{{ product.name }}"
-          />
+          [src]="product.imagePath || 'assets/placeholder.png'"
+          class="card-img-top img-fluid"
+          alt="{{ product.name }}"
+        />
         </div>
         <div class="card-body text-center">
           <h5 class="card-title">{{ product.name }}</h5>
@@ -26,7 +26,7 @@
         </div>
         <div class="card-footer text-center">
           <button class="btn btn-primary btn-sm rounded-pill me-2" (click)="openModal(product)">View Details</button>
-          <button class="btn btn-outline-success btn-sm rounded-pill" (click)="addToCart(product)">Add to Cart</button>
+          <button class="btn btn-outline-success btn-sm rounded-pill" (click)="addToCart(product)"> {{ addedToCart[product._id] ? 'Added' : 'Add to Cart' }}</button>
         </div>
       </div>
     </div>
