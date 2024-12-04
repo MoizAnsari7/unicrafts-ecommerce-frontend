@@ -42,7 +42,7 @@ export class ProductListComponent  implements OnInit{
 this.productService.getAllProducts().subscribe(
   (res: any) => {
     console.log('API response:', res);
-    this.products = Array.isArray(res.product) ? res.product : [res.product];
+    this.products = Array.isArray(res.products) ? res.products : [res.products];
     console.log('Products after fetch:', this.products);
     this.loading = false;
     this.cdr.detectChanges();
