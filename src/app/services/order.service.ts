@@ -19,6 +19,10 @@ export class OrdersService {
     return this.http.get(`${this.apiUrl}/orders`);
   }
 
+  cancelOrder(orderId:any){
+    return this.http.delete(`${this.apiUrl}/${orderId}`);
+  }
+
   clearCart() {
     return this.http.delete(`${this.apiUrl}/clearCart`);
   }

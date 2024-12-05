@@ -25,6 +25,9 @@ this.getMyOrders();
     })
   }
 
+
+
+
   getStatusClass(status: string): string {
     switch (status) {
       case 'Delivered':
@@ -43,12 +46,9 @@ this.getMyOrders();
   }
 
   cancelOrder(orderId: string): void {
-    const order = this.orders.find((o) => o.id === orderId);
-    if (order && order.status !== 'Cancelled') {
-      order.status = 'Cancelled';
-      this.notiflixService.error(`Order #${orderId} has been cancelled.`);
-    } else {
-      this.notiflixService.info(`Order #${orderId} is already cancelled.`);
-    }
+    this.ordersService.cancelOrder(orderId).subscribe((res:any)=>{
+      this.notiflixService.success(`${res.message} for #${orderId}`);
+      this.getMyOrders();
+    })
   }
 }
