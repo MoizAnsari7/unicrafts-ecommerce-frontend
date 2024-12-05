@@ -7,6 +7,7 @@ import { OrdersService } from 'src/app/services/order.service';
   selector: 'app-my-orders',
   templateUrl: './my-order.component.html',
   styleUrls: ['./my-order.component.css'],
+  
 })
 export class MyOrderComponent implements OnInit {
   orders: any[] = [];

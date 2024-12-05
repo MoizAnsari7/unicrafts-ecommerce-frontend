@@ -1,3 +1,4 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
@@ -7,7 +8,18 @@ import { OrdersService } from 'src/app/services/order.service';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.css'], // Add your CSS here
+  styleUrls: ['./checkout.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateX(20px)' }),
+        animate('0.5s ease-out', style({ opacity: 1, transform: 'translateX(0)' }))
+      ]),
+      transition(':leave', [
+        animate('0.3s ease-in', style({ opacity: 0, transform: 'translateX(20px)' }))
+      ])
+    ])
+  ] // Add your CSS here
 })
 export class CheckoutComponent implements OnInit {
   cartItems: any[] = []; // Holds cart items
@@ -15,6 +27,7 @@ export class CheckoutComponent implements OnInit {
   tax: number = 0; // Tax amount
   deliveryCharge: number = 50; // Fixed delivery charge
   totalAmount: number = 0; // Total payable amount
+  orderPlaced: boolean = false;
 
   // Form fields for delivery address
   fullName: string = '';
@@ -115,11 +128,12 @@ export class CheckoutComponent implements OnInit {
 
     this.orderService.placeOrder(orderData).subscribe(
       (response :any) => {
+        this.orderPlaced = true; // Show success message
         this.notiflixService.success('Order placed successfully!');
-        this.orderService.clearCart().subscribe((res:any)=>{
-          this.notiflixService.info(res.message);
+        setTimeout(()=>{
           this.router.navigate(['/my-order']); // Navigate to the orders page
-        }); // Clear the cart after order placement
+        },5000)
+        this.orderService.clearCart().subscribe();
       },
       (error:any) => {
         console.error('Error placing order:', error);
