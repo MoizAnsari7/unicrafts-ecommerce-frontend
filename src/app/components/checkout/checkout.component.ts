@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
+import { NotiflixService } from 'src/app/services/notiflix.service';
 import { OrdersService } from 'src/app/services/order.service';
 
 @Component({
@@ -19,9 +20,11 @@ export class CheckoutComponent implements OnInit {
   fullName: string = '';
   address: string = '';
   city: string = '';
+  state : string ='';
   zipcode: string = '';
   phone: string = '';
-  selectedPaymentMethod: string = '';
+  country: any = '';
+  selectedPaymentMethod: string = 'payTm';
 
   couponCode: string = ''; // Coupon code entered by the user
   discount: number = 0; // Discount applied (if any)
@@ -29,7 +32,8 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private orderService: OrdersService,
-    private router: Router
+    private router: Router,
+    private notiflixService: NotiflixService
   ) {}
 
   ngOnInit(): void {
@@ -37,20 +41,21 @@ export class CheckoutComponent implements OnInit {
   this.loadCartData();
   }
 
-  getCartDataIntoCheckout(){
-    this.cartService.getMyCartItems().subscribe((res:any)=>{
-      this.cartItems = res.cart.items;
-      this.totalAmount = res.cart.total
-      console.log("from Checkout", res);
+  // getCartDataIntoCheckout(){
+  //   this.cartService.getMyCartItems().subscribe((res:any)=>{
+  //     this.cartItems = res.cart.items;
+  //     this.totalAmount = res.cart.total
+  //     console.log("from Checkout", res);
       
-    })
-  }
+  //   })
+  // }
 
   // Load cart data from the CartService
   loadCartData(): void {
     this.cartService.getMyCartItems().subscribe(
       (data: any) => {
         this.cartItems = data.cart.items;
+        console.log("from Checkout", this.cartItems);
         this.calculateTotals();
       },
       (error:any) => {
@@ -99,7 +104,9 @@ export class CheckoutComponent implements OnInit {
         fullName: this.fullName,
         address: this.address,
         city: this.city,
+        state: this.state, // Replace or let the user enter this
         zipcode: this.zipcode,
+        country: this.country, // Replace or let the user enter this
         phone: this.phone,
       },
       paymentMethod: this.selectedPaymentMethod,
@@ -108,9 +115,11 @@ export class CheckoutComponent implements OnInit {
 
     this.orderService.placeOrder(orderData).subscribe(
       (response :any) => {
-        alert('Order placed successfully!');
-        this.cartService.clearCart(); // Clear the cart after order placement
-        this.router.navigate(['/orders']); // Navigate to the orders page
+        this.notiflixService.success('Order placed successfully!');
+        this.orderService.clearCart().subscribe((res:any)=>{
+          this.notiflixService.info(res.message);
+          this.router.navigate(['/my-order']); // Navigate to the orders page
+        }); // Clear the cart after order placement
       },
       (error:any) => {
         console.error('Error placing order:', error);

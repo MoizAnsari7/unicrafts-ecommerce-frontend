@@ -6,27 +6,92 @@
       <div class="col-lg-7">
         <h4 class="fw-bold text-dark">Delivery Address</h4>
         <form>
-          <div class="mb-3">
-            <label for="fullName" class="form-label">Full Name</label>
-            <input type="text" id="fullName" class="form-control" placeholder="Enter your name" required />
-          </div>
-          <div class="mb-3">
-            <label for="address" class="form-label">Address</label>
-            <textarea id="address" class="form-control" rows="3" placeholder="Enter your address" required></textarea>
-          </div>
-          <div class="mb-3">
-            <label for="city" class="form-label">City</label>
-            <input type="text" id="city" class="form-control" placeholder="Enter your city" required />
-          </div>
-          <div class="mb-3">
-            <label for="zipcode" class="form-label">Zip Code</label>
-            <input type="text" id="zipcode" class="form-control" placeholder="Enter your zip code" required />
-          </div>
-          <div class="mb-3">
-            <label for="phone" class="form-label">Phone Number</label>
-            <input type="text" id="phone" class="form-control" placeholder="Enter your phone number" required />
-          </div>
-        </form>
+            <div class="mb-3">
+              <label for="fullName" class="form-label">Full Name</label>
+              <input
+                type="text"
+                id="fullName"
+                class="form-control"
+                placeholder="Enter your name"
+                [(ngModel)]="fullName"
+                name="fullName"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Address</label>
+              <textarea
+                id="address"
+                class="form-control"
+                rows="3"
+                placeholder="Enter your address"
+                [(ngModel)]="address"
+                name="address"
+                required
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="city" class="form-label">City</label>
+              <input
+                type="text"
+                id="city"
+                class="form-control"
+                placeholder="Enter your city"
+                [(ngModel)]="city"
+                name="city"
+                required
+              />
+            </div>
+            <div class="mb-3">
+                <label for="state" class="form-label">State</label>
+                <input
+                  type="text"
+                  id="state"
+                  class="form-control"
+                  placeholder="Enter your state"
+                  [(ngModel)]="state"
+                  name="state"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="country" class="form-label">Country</label>
+                <input
+                  type="text"
+                  id="country"
+                  class="form-control"
+                  placeholder="Enter your country"
+                  [(ngModel)]="country"
+                  name="country"
+                  required
+                />
+              </div>
+            <div class="mb-3">
+              <label for="zipcode" class="form-label">Zip Code</label>
+              <input
+                type="text"
+                id="zipcode"
+                class="form-control"
+                placeholder="Enter your zip code"
+                [(ngModel)]="zipcode"
+                name="zipcode"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input
+                type="text"
+                id="phone"
+                class="form-control"
+                placeholder="Enter your phone number"
+                [(ngModel)]="phone"
+                name="phone"
+                required
+              />
+            </div>
+          </form>
+          
       </div>
   
       <!-- Right Section: Order Summary -->
@@ -86,7 +151,7 @@
   
     <!-- Place Order Button -->
     <div class="text-end mt-4">
-      <button class="btn btn-success btn-lg px-5 shadow">Place Order</button>
+      <button class="btn btn-success btn-lg px-5 shadow" (click)="placeOrder()">Place Order</button>
     </div>
   </div>
   

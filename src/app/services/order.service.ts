@@ -11,11 +11,15 @@ export class OrdersService {
 
   // Add a new order
   placeOrder(order:any) {
-   return this.http.post(`${this.apiUrl}/placeOrder`, order );
+   return this.http.post(`${this.apiUrl}/placeOrders`, order );
   }
 
   // Get all orders
   getOrders(){
-    
+    return this.http.get(`${this.apiUrl}/orders`);
+  }
+
+  clearCart() {
+    return this.http.delete(`${this.apiUrl}/clearCart`);
   }
 }

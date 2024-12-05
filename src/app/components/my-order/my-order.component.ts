@@ -14,10 +14,15 @@ export class MyOrderComponent implements OnInit {
   constructor(private ordersService: OrdersService, private notiflixService : NotiflixService) {}
 
   ngOnInit(): void {
-    // this.orders = this.ordersService.getOrders(); // Fetch orders
+this.getMyOrders();
+     }
+  
 
-    console.log("this order", this.orders);
-    
+  getMyOrders(){
+    this.ordersService.getOrders().subscribe((res:any)=>{
+      console.log("this order", res);
+      this.orders = res
+    })
   }
 
   getStatusClass(status: string): string {

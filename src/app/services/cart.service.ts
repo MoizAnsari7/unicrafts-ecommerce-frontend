@@ -63,8 +63,6 @@ return this.http.get(this.apiUrl);
     return this.http.post(`${this.apiUrl}/multiple`, { items });
   }
   
-  // Clear cart after checkout
-  clearCart() {
-    
-  }
+  // Clear cart after checkout clearCart
+ 
 }

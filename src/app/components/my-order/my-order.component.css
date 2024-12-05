@@ -34,3 +34,29 @@
     color: #fff;
   }
   
+
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .btn-warning, .btn-danger {
+    min-width: 90px;
+  }
+  
+  .list-group-item {
+    padding: 10px 15px;
+  }
+  
+  .text-muted {
+    font-size: 0.9rem;
+  }
+  
