@@ -1,62 +1,211 @@
-.card {
-    border-radius: 10px;
-    transition: box-shadow 0.3s ease-in-out;
-  }
-  
-  .card:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .badge {
-    padding: 0.4em 0.7em;
-    font-size: 0.85rem;
-    border-radius: 20px;
-    text-transform: capitalize;
-  }
-  
-  .bg-success {
-    background-color: #28a745 !important;
-    color: #fff;
-  }
-  
-  .bg-info {
-    background-color: #17a2b8 !important;
-    color: #fff;
-  }
-  
-  .bg-danger {
-    background-color: #dc3545 !important;
-    color: #fff;
-  }
-  
-  .bg-secondary {
-    background-color: #6c757d !important;
-    color: #fff;
-  }
-  
+.filters {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 8px;
+}
 
-  .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.card {
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.list-group-item {
+  padding: 1rem;
+  border: none;
+}
+
+.list-group-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.badge {
+  font-size: 0.85rem;
+  padding: 0.5rem;
+  border-radius: 12px;
+}
+
+.btn-sm {
+  font-size: 0.875rem;
+}
+
+.text-muted {
+  color: #6c757d;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.fs-4 {
+  font-size: 1.25rem;
+}
+
+.ms-auto {
+  margin-left: auto;
+}
+
+.orders-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.order-details {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.product-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.product-price {
+  font-size: 1rem;
+  color: #555;
+}
+
+.order-status {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #28a745;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.place-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #000000;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.order-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* Ensures buttons wrap if needed */
+  gap: 10px; /* Adds spacing between buttons */
+}
+
+.rate-button,
+.cancel-button {
+  font-size: 1rem; /* Adjusts text size */
+  font-weight: 500; /* Makes text visually prominent */
+  padding: 0.5rem 1rem; /* Adds responsive padding */
+  border: none;
+  border-radius: 5px; /* Rounds the edges */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  white-space: nowrap; /* Prevents text wrapping inside buttons */
+}
+
+.rate-button {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.rate-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.cancel-button {
+  background-color: #ff4d4f;
+  color: #fff;
+}
+
+.cancel-button:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+}
+
+.shared-order {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+  background-color: #e9ecef;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .order-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  .order-image-col {
+    width: 100%;
+    text-align: center;
   }
-  
-  .card-body {
-    padding: 20px;
+
+  .order-image img {
+    max-width: 100px;
+    height: auto;
   }
-  
-  .btn-warning, .btn-danger {
-    min-width: 90px;
+
+  .order-details {
+    padding-left: 0;
   }
-  
-  .list-group-item {
-    padding: 10px 15px;
+}
+
+@media (max-width: 576px) {
+  .filters {
+    margin-bottom: 20px;
   }
-  
-  .text-muted {
+
+  .order-actions {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .order-actions button {
+    margin-bottom: 10px;
+  }
+
+  .order-item {
+    padding: 10px;
+  }
+
+  .product-name {
+    font-size: 1rem;
+  }
+
+  .product-price {
     font-size: 0.9rem;
   }
-  
+}

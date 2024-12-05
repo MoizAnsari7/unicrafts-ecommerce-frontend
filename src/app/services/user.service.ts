@@ -26,29 +26,18 @@ export class UserService implements OnInit {
 
 
   getUserProfile(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/profile`, {
-      headers: this.getAuthHeaders(),
-    });
+    return this.http.get(`${this.apiUrl}/profile`);
   }
 
   updateUserProfile(profile: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/profile`, profile, {
-      headers: this.getAuthHeaders(),
-    });
+    return this.http.put(`${this.apiUrl}/profile`, profile);
   }
 
   uploadProfilePicture(formData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/upload-profile-picture`, formData, {
-      headers: this.getAuthHeaders(),
-    });
+    return this.http.put(`${this.apiUrl}/profile/picture`, formData);
   }
 
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-  }
+  
 
 
 

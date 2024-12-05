@@ -25,8 +25,10 @@ export class ProductListComponent  implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log('ngOnInit triggered');
-  this.fetchProducts();
+    
+    setTimeout(()=>{
+     this.fetchProducts();
+   },2000)
   
   }
 

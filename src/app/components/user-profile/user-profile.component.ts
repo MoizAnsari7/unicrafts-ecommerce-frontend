@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,6 +16,13 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.loadUserProfile();
+  }
+
+  activeTab: string = 'profile'; // Default tab
+
+  // Switch tabs based on user selection
+  switchTab(tab: string): void {
+    this.activeTab = tab;
   }
 
   initForm(): void {

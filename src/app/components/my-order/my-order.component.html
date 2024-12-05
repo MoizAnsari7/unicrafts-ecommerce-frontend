@@ -1,67 +1,78 @@
 <div class="container py-5">
+  <div class="row">
+    <!-- Filters Sidebar -->
+    <div class="col-lg-3 col-md-4 mb-4">
+      <div class="filters">
+        <h5 class="fw-bold">Filters</h5>
+        <div class="mb-3">
+          <h6 class="text-muted">Order Status</h6>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="onTheWay" />
+            <label class="form-check-label" for="onTheWay">On the way</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="delivered" />
+            <label class="form-check-label" for="delivered">Delivered</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="cancelled" />
+            <label class="form-check-label" for="cancelled">Cancelled</label>
+          </div>
+        </div>
+        <div class="mb-3">
+          <h6 class="text-muted">Order Time</h6>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="last30Days" />
+            <label class="form-check-label" for="last30Days">Last 30 days</label>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  
-  <h2 class="text-center mb-4 fw-bold text-primary">My Orders</h2>
-  
-  <div *ngIf="orders.length > 0; else noOrders">
-    <div class="row g-4">
-      <div *ngFor="let order of orders" class="col-lg-4 col-md-6 col-sm-12">
-        <div class="card shadow-lg border-0 rounded-3">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="card-title text-truncate" style="max-width: 60%;">Order #{{ order._id }}</h5>
-              <span class="badge" [ngClass]="getStatusClass(order.status)">
-                {{ order.status }}
-              </span>
+    <!-- Orders List -->
+    <div class="col-lg-9 col-md-8">
+      <div class="orders-container">
+        <div *ngFor="let order of orders" class="order-item">
+          <div class="row">
+            <!-- Order Image -->
+            <div class="col-4 order-image-col">
+              <div class="order-image">
+                <img [src]="'http://localhost:3000/' + order.items[0].productId.images[0]" alt="Product Image" class="img-fluid" />
+              </div>
             </div>
-            <p class="text-muted mb-2">Placed on: {{ order.updatedAt | date:'short' }}</p>
 
-            <!-- Products List -->
-            <ul class="list-group mb-3">
-              <li *ngFor="let product of order.products" class="list-group-item d-flex justify-content-between align-items-center">
-                <div class="d-flex flex-column">
-                  <span class="fw-semibold">{{ product.name }} (x{{ product.quantity }})</span>
-                  <span class="text-muted" style="font-size: 0.875rem;">₹{{ product.price * product.quantity }}</span>
+            <!-- Order Details -->
+            <div class="col-8">
+              <div class="order-details">
+                <div class="product-name">{{ order.items[0].productId.name }} <small>({{order.items[0].quantity}}*{{order.items[0].productId.price }})</small></div>
+                <div class="product-price">₹{{ order.total }}</div>
+                <div class="order-status">
+                  <span class="place-dot"></span>
+                  Placed on {{ order.createdAt | date: 'medium' }}
                 </div>
-                <div class="d-flex flex-column align-items-end">
-                  <strong>₹{{ product.price * product.quantity }}</strong>
+                <div class="order-status">
+                  <span class="status-dot"></span>
+                  {{ order.status }} on {{ order.updatedAt | date: 'medium' }}
                 </div>
-              </li>
-            </ul>
-
-            <!-- Order Total -->
-            <div class="d-flex justify-content-between align-items-center mt-3">
-              <strong class="fs-5">Total: ₹{{ order.total }}</strong>
-              <div>
-                <button
-                  class="btn btn-warning btn-sm me-2"
-                  (click)="trackOrder(order.id)"
-                  [disabled]="order.status === 'Cancelled'"
-                  title="Track Order"
-                >
-                  <i class="bi bi-truck"></i> Track
-                </button>
-                <button
-                  class="btn btn-danger btn-sm"
-                  (click)="cancelOrder(order._id)"
-                  [disabled]="order.status === 'Cancelled'"
-                  title="Cancel Order"
-                >
-                  <i class="bi bi-x-circle"></i> Cancel
-                </button>
+                <div class="order-actions mt-4 mb-2 d-flex justify-content-start align-items-center gap-3 flex-nowrap">
+                  <button class="rate-button px-4 py-2">Rate & Review Product</button>
+                  <button class="cancel-button px-4 py-2 text-end" (click)="cancelOrder(order._id)">
+                    Cancel Order
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- No Orders Message -->
+      <ng-template #noOrders>
+        <div class="text-center">
+          <p class="text-muted fs-4">You have no orders yet.</p>
+          <a routerLink="/products" class="btn btn-primary btn-lg">Start Shopping</a>
+        </div>
+      </ng-template>
     </div>
   </div>
-
-  <!-- No Orders Message -->
-  <ng-template #noOrders>
-    <div class="text-center">
-      <p class="text-muted fs-4">You have no orders yet.</p>
-      <a routerLink="/products" class="btn btn-primary btn-lg">Start Shopping</a>
-    </div>
-  </ng-template>
 </div>

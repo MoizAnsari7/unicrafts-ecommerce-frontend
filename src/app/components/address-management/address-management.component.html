@@ -1,57 +1,84 @@
 <div class="address-container">
-  
+  <!-- Title -->
+  <h3 class="address-title">Manage Addresses</h3>
 
   <!-- Loading Spinner -->
-  <div *ngIf="isLoading" class="text-center">
+  <div *ngIf="isLoading" class="text-center my-4">
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 
-  <!-- No Addresses Message -->
+  <!-- No Addresses -->
   <div *ngIf="!isLoading && addresses.length === 0" class="no-address text-center">
-    <p>No addresses available.</p>
+    <p>You haven't added any addresses yet.</p>
     <button class="btn btn-primary" (click)="openDialog('add')">Add New Address</button>
   </div>
 
-  <!-- Address List -->
-  <div *ngIf="!isLoading && addresses.length > 0" class="address-list">
-    <div *ngFor="let address of addresses" class="card mb-3">
-      <div class="card-body">
-        <p><strong>Street:</strong> {{ address.street }}</p>
-        <p><strong>City:</strong> {{ address.city }}</p>
-        <p><strong>State:</strong> {{ address.state }}</p>
-        <p><strong>Country:</strong> {{ address.country }}</p>
-        <p><strong>Postal Code:</strong> {{ address.postalCode }}</p>
-        <div class="address-actions mt-3">
-          <button class="btn btn-outline-primary me-2" (click)="openDialog('edit', address)">Edit</button>
-          <button class="btn btn-outline-danger" (click)="deleteAddress(address._id)">Delete</button>
+  <!-- Address Cards -->
+  <div *ngIf="!isLoading && addresses.length > 0" class="address-list row g-3">
+    <div
+      *ngFor="let address of addresses"
+      class="col-12 col-md-6 col-lg-4"
+    >
+      <div class="card address-card h-100">
+        <div class="card-body">
+          <!-- Address Details -->
+          <h5 class="card-title">
+            {{ address.default ? 'Default Address' : '' }}
+          </h5>
+          <p><strong>Street:</strong> {{ address.street }}</p>
+          <p><strong>City:</strong> {{ address.city }}</p>
+          <p><strong>State:</strong> {{ address.state }}</p>
+          <p><strong>Country:</strong> {{ address.country }}</p>
+          <p><strong>Postal Code:</strong> {{ address.zip }}</p>
+          <p><strong>Phone:</strong> {{ address.phone }}</p>
+
+          <!-- Actions -->
+          <div class="address-actions mt-3">
+            <button class="btn btn-outline-primary me-2" (click)="openDialog('edit', address)">
+              Edit
+            </button>
+            <button class="btn btn-outline-danger" (click)="deleteAddress(address._id)">
+              Delete
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Add New Address Button -->
-  <!-- <div class="text-center mt-4">
-    <button class="btn btn-primary" (click)="openDialog('add')">Add New Address</button>
-  </div>
-</div> -->
+  
 
-<!-- Modal Dialog -->
-<div class="modal fade show" tabindex="-1" role="dialog" style="display: block;" *ngIf="isDialogOpen">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">{{ mode === 'add' ? 'Add Address' : 'Edit Address' }}</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeDialog()"></button>
-      </div>
-      <div class="modal-body">
-        <app-address-dialog
-          [address]="currentAddress"
-          [mode]="mode"
-          (onSave)="handleSave($event)"
-          (onCancel)="closeDialog()"
-        ></app-address-dialog>
+  <!-- Address Dialog Modal -->
+  <div
+    class="modal fade show"
+    tabindex="-1"
+    role="dialog"
+    style="display: block;"
+    *ngIf="isDialogOpen"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            {{ mode === 'add' ? 'Add Address' : 'Edit Address' }}
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="closeDialog()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <app-address-dialog
+            [address]="currentAddress"
+            [mode]="mode"
+            (onSave)="handleSave($event)"
+            (onCancel)="closeDialog()"
+          ></app-address-dialog>
+        </div>
       </div>
     </div>
   </div>

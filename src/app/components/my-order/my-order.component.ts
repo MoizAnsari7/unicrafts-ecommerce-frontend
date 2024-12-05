@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotiflixService } from 'src/app/services/notiflix.service';
 import { OrdersService } from 'src/app/services/order.service';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -19,12 +20,24 @@ this.getMyOrders();
      }
   
 
-  getMyOrders(){
-    this.ordersService.getOrders().subscribe((res:any)=>{
-      console.log("this order", res);
-      this.orders = res
-    })
-  }
+     getMyOrders() {
+      this.ordersService.getOrders()
+      .pipe(
+        map((res: any) => res.orders) // Extract 'orders' array from the API response
+      )
+      .subscribe({
+        next: (orders: any[]) => {
+          this.orders = orders;
+          console.log('Orders fetched successfully:', this.orders);
+        },
+        error: (error) => {
+          console.error('Failed to fetch orders:', error);
+          this.notiflixService.error('Error fetching orders');
+        }
+      });
+    }
+    
+    
 
 
 
