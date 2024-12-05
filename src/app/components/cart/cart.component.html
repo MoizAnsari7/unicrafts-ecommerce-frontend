@@ -65,7 +65,7 @@
         <h4 class="fw-bold text-success mb-3">Order Summary</h4>
         <p class="text-dark mb-2">Total Items: {{ cartItems?.length }}</p>
         <h5 class="fw-bold text-secondary">Total Amount: ₹{{ totalAmount }}</h5>
-        <button class="btn btn-primary w-100 mt-3 fw-bold py-2" >
+        <button class="btn btn-primary w-100 mt-3 fw-bold py-2" (click)="checkOut()">
           Checkout
         </button>
       </div>

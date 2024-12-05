@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OrdersService } from 'src/app/services/order.service';
 import { NotiflixService } from 'src/app/services/notiflix.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +19,8 @@ export class CartComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private ordersService: OrdersService,
-    private notiflixService : NotiflixService
+    private notiflixService : NotiflixService,
+    private router : Router
   ) {}
 
   ngOnInit() {
@@ -62,11 +64,10 @@ this.getCartItems()
   }
 
   // Checkout and clear cart
-  // checkout(): void {
-  //   if (this.cartItems.length === 0) {
-  //     this.notiflixService.info('Cart is empty!');
-  //     return;
-  //   }
+  checkOut(): void {
+   console.log( " checkout click" , this.cartItems);
+   this.router.navigate(['/checkout'], { state: { cartItems: this.cartItems } });
+  }
 
   //   const newOrder = {
   //     id: 'ORD' + Math.floor(100000 + Math.random() * 900000),

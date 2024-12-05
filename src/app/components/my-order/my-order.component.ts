@@ -14,7 +14,7 @@ export class MyOrderComponent implements OnInit {
   constructor(private ordersService: OrdersService, private notiflixService : NotiflixService) {}
 
   ngOnInit(): void {
-    this.orders = this.ordersService.getOrders(); // Fetch orders
+    // this.orders = this.ordersService.getOrders(); // Fetch orders
 
     console.log("this order", this.orders);
     
