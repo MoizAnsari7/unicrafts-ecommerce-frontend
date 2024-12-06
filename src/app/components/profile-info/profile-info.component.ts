@@ -14,6 +14,7 @@ export class ProfileInfoComponent implements OnInit {
   user: any;  // This will hold the user data
   selectedProfilePicture!: File;
   profilePicturePreview: string | null = null;
+  isLoading : boolean = true;
 
   constructor(private fb: FormBuilder, private userService: UserService, private notiflix : NotiflixService) { }
 
@@ -25,21 +26,22 @@ export class ProfileInfoComponent implements OnInit {
       profilePicture: [null]
     });
 
- this.fetchUserProfile();
+    
+    setTimeout(()=>{
+      this.fetchUserProfile();
+      this.isLoading = false;
+    }, 2000)
     }
 
   // fetch user profile
   fetchUserProfile(){
     this.userService.getProfile().subscribe(
       (data) => {
-        this.user = data.user; 
-        
-        setTimeout(()=>{
+          this.user = data.user; 
           this.profileForm.patchValue({
            username: this.user.username,
            email: this.user.email
          });
-        },2000)
         
         console.log("profile", data);
         this.notiflix.info(data.message)

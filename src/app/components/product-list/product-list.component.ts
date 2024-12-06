@@ -20,6 +20,11 @@ export class ProductListComponent  implements OnInit{
   addedToCart: { [key: string]: boolean } = {};
   cartItems : any;
 
+  searchTerm: string = ''; // Search term entered by the user
+filteredProducts: any[] = []; // Filtered product list
+categories: string[] = []; // Available categories
+selectedCategory: string = ''; // Selected category for filtering
+
   constructor(private productService: ProductService, private notiflixService: NotiflixService, private cartService : CartService,  private cdr: ChangeDetectorRef, private userService: UserService ) {
    
   }
@@ -28,7 +33,7 @@ export class ProductListComponent  implements OnInit{
     
     setTimeout(()=>{
      this.fetchProducts();
-   },2000)
+   },1000)
   
   }
 
@@ -45,6 +50,14 @@ this.productService.getAllProducts().subscribe(
   (res: any) => {
     console.log('API response:', res);
     this.products = Array.isArray(res.products) ? res.products : [res.products];
+
+    this.filteredProducts = [...this.products]; // Initialize filteredProducts
+
+    // Extract unique categories
+    this.categories = [
+      ...new Set(this.products.map((product: any) => product.category || 'Uncategorized'))
+    ];
+
     console.log('Products after fetch:', this.products);
     this.loading = false;
     this.cdr.detectChanges();
@@ -55,6 +68,30 @@ this.productService.getAllProducts().subscribe(
   }
 
     );
+  }
+  
+
+  onSearch(): void {
+    this.filterProducts();
+  }
+  
+  onFilter(): void {
+    this.filterProducts();
+  }
+  
+  filterProducts(): void {
+    const searchTermLower = this.searchTerm.toLowerCase();
+  
+    // Apply search and filter
+    this.filteredProducts = this.products.filter((product: any) => {
+      const matchesSearch =
+        product.name.toLowerCase().includes(searchTermLower) ||
+        product.description.toLowerCase().includes(searchTermLower);
+      const matchesCategory =
+        !this.selectedCategory || product.category === this.selectedCategory;
+  
+      return matchesSearch && matchesCategory;
+    });
   }
   
 

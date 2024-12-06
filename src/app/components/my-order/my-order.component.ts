@@ -12,11 +12,14 @@ import { map } from 'rxjs/operators';
 })
 export class MyOrderComponent implements OnInit {
   orders: any[] = [];
+  isLoading :boolean=true;
 
   constructor(private ordersService: OrdersService, private notiflixService : NotiflixService) {}
 
   ngOnInit(): void {
-this.getMyOrders();
+    setTimeout(()=>{
+      this.getMyOrders();
+    },1000)
      }
   
 
@@ -28,6 +31,7 @@ this.getMyOrders();
       .subscribe({
         next: (orders: any[]) => {
           this.orders = orders;
+          this.isLoading = false;
           console.log('Orders fetched successfully:', this.orders);
         },
         error: (error) => {
