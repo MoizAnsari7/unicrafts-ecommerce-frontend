@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OrdersService } from 'src/app/services/order.service';
 import { NotiflixService } from 'src/app/services/notiflix.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +19,8 @@ export class CartComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private ordersService: OrdersService,
-    private notiflixService : NotiflixService
+    private notiflixService : NotiflixService,
+    private router : Router
   ) {}
 
   ngOnInit() {
@@ -29,9 +31,9 @@ export class CartComponent implements OnInit {
 
   getCartItems(){
     this.cartService.getMyCartItems().subscribe((res:any)=>{
-      console.log("ressssss",res);
-      this.cartItems = res.items;
-      this.totalAmount = res.total;
+      console.log("cart items ressssss",res);
+      this.cartItems = res.cart.items;
+      this.totalAmount = res.cart.total;
     })
   }
 
@@ -54,7 +56,7 @@ export class CartComponent implements OnInit {
 
   // Remove product from cart
   removeItem(item: any) {
-    this.cartService.removeFromCart(item.productId).subscribe((res:any)=>{
+    this.cartService.removeFromCart(item.productId._id).subscribe((res:any)=>{
       this.notiflixService.warning(res.message);
 this.getCartItems()
     })
@@ -62,11 +64,10 @@ this.getCartItems()
   }
 
   // Checkout and clear cart
-  // checkout(): void {
-  //   if (this.cartItems.length === 0) {
-  //     this.notiflixService.info('Cart is empty!');
-  //     return;
-  //   }
+  checkOut(): void {
+   console.log( " checkout click" , this.cartItems);
+   this.router.navigate(['/checkout'], { state: { cartItems: this.cartItems } });
+  }
 
   //   const newOrder = {
   //     id: 'ORD' + Math.floor(100000 + Math.random() * 900000),
@@ -84,6 +85,7 @@ this.getCartItems()
 
   updateQuantity(item: any, action: 'increment' | 'decrement') {
     let quantity = item.quantity;
+  console.log("itemsss", item);
   
     // Adjust quantity based on the action
     if (action === 'increment') {
@@ -94,7 +96,7 @@ this.getCartItems()
   
     // Remove item if quantity is 0
     if (quantity <= 0) {
-      this.cartService.removeFromCart(item.productId).subscribe(
+      this.cartService.removeFromCart(item.productId._id).subscribe(
         (res: any) => {
           this.notiflixService.success('Item removed successfully:');
           this.getCartItems(); // Refresh the cart items
@@ -108,7 +110,7 @@ this.getCartItems()
   
     // Update the quantity
     const payload = { quantity }; // Create payload object
-    this.cartService.updateQuantity(item.productId, payload).subscribe(
+    this.cartService.updateQuantity(item.productId._id, payload).subscribe(
       (res: any) => {
         this.notiflixService.success('Quantity updated successfully:');
         this.getCartItems(); // Refresh the cart items
@@ -133,11 +135,5 @@ this.getCartItems()
     this.cartItems = [];
   }
 
-  showToastNotification(message: string) {
-    this.toastMessage = message;
-    this.showToast = true;
-    setTimeout(() => {
-      this.showToast = false;
-    }, 3000);
-  }
+  
 }

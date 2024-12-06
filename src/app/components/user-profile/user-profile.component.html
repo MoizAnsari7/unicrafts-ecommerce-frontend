@@ -1,60 +1,76 @@
-<div class="profile-container">
-  <div class="profile-card">
-    <h2 class="text-center mb-4 fw-bold text-primary">My Profile</h2>
-    <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
-      <!-- Username -->
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          class="form-control"
-          formControlName="username"
-        />
-        <small *ngIf="profileForm.get('username')?.invalid && profileForm.get('username')?.touched" class="text-danger">
-          Username is required.
-        </small>
+<div class="account-container container-fluid py-4">
+  <div class="row">
+    <!-- Sidebar Navigation -->
+    <div class="col-lg-3 col-md-4 col-sm-12">
+      <div class="sidebar p-3 shadow-sm rounded">
+        <h4 class="fw-bold text-primary mb-3">My Account</h4>
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            [class.active]="activeTab === 'profile'"
+            (click)="switchTab('profile')"
+          >
+            Profile Information
+          </li>
+          <li
+            class="list-group-item"
+            [class.active]="activeTab === 'address'"
+            (click)="switchTab('address')"
+          >
+            Address Management
+          </li>
+          <li
+            class="list-group-item"
+            [class.active]="activeTab === 'orders'"
+            (click)="switchTab('orders')"
+          >
+            My Orders
+          </li>
+          <li
+            class="list-group-item"
+            [class.active]="activeTab === 'wishlist'"
+            (click)="switchTab('wishlist')"
+          >
+            Wishlist
+          </li>
+        </ul>
       </div>
+    </div>
 
-      <!-- Email -->
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          class="form-control"
-          formControlName="email"
-        />
-        <small *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="text-danger">
-          Please enter a valid email.
-        </small>
+    <!-- Main Content Area -->
+    <div class="col-lg-9 col-md-8 col-sm-12">
+      <div class="main-content p-4 shadow-sm rounded">
+        <ng-container [ngSwitch]="activeTab">
+          <!-- Profile Tab -->
+          <div *ngSwitchCase="'profile'">
+            <h4 class="fw-bold text-primary mb-3">Profile Information</h4>
+            <app-profile-info></app-profile-info>
+          </div>
+
+          <!-- Address Tab -->
+          <div *ngSwitchCase="'address'">
+            <h4 class="fw-bold text-primary mb-3">Address Management</h4>
+            <app-address-management></app-address-management>
+          </div>
+
+          <!-- Orders Tab -->
+          <div *ngSwitchCase="'orders'">
+            <h4 class="fw-bold text-primary mb-3">My Orders</h4>
+            <app-my-orders></app-my-orders>
+          </div>
+
+          <!-- Wishlist Tab -->
+          <div *ngSwitchCase="'wishlist'">
+            <h4 class="fw-bold text-primary mb-3">My Wishlist</h4>
+            <!-- <app-wishlist></app-wishlist> -->
+          </div>
+
+          <!-- Default Tab -->
+          <div *ngSwitchDefault>
+            <p class="text-muted">Select an option from the menu.</p>
+          </div>
+        </ng-container>
       </div>
-
-      <!-- Profile Picture Upload -->
-      <div class="form-group">
-        <label for="profilePicture">Profile Picture:</label>
-        <input
-          type="file"
-          id="profilePicture"
-          class="form-control"
-          (change)="onFileSelected($event)"
-        />
-        <button type="button" class="btn btn-primary mt-2" (click)="uploadProfilePicture()">
-          Upload
-        </button>
-      </div>
-
-      <!-- Save Button -->
-      <div class="form-actions mt-3">
-        <button type="submit" class="btn btn-success" [disabled]="profileForm.invalid">
-          Save
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <div class="address-card mt-4">
-    <h2 class="text-center mb-4 fw-bold text-primary">My Addresses</h2>
-    <app-address-management></app-address-management>
+    </div>
   </div>
 </div>

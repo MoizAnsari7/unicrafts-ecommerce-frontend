@@ -7,7 +7,7 @@ import * as jwt_decode from 'jwt-decode';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  isAdmin: boolean = true; // Sidebar initially open
+  isAdmin: boolean = false; // Sidebar initially open
   activeTab: string = 'dashboard'; // Default tab
 
   

@@ -1,12 +1,42 @@
 .address-container {
-  max-width: 600px;
-  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
 }
 
-.card {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.address-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-.no-address p {
-  margin-bottom: 1rem;
+.address-list {
+  margin-top: 20px;
+}
+
+.address-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.address-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.address-actions button {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.no-address {
+  margin-top: 20px;
+  font-size: 1.2rem;
 }

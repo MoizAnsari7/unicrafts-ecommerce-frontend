@@ -1,0 +1,64 @@
+<div class="profile-container">
+    
+    <div class="profile-display">
+      <div class="profile-info">
+
+        <img [src]="user.profilePicture ? 'http://localhost:3000' + user.profilePicture : 'https://www.pngitem.com/pimgs/m/22-223968_default-profile-picture-circle-hd-png-download.png'" 
+        alt="Profile Picture" 
+        class="profile-pic img-fluid" />
+
+        <h4>{{ profileForm.get('username')?.value || 'Username' }}</h4>
+        <p>{{ profileForm.get('email')?.value || 'Email' }}</p>
+      </div>
+    </div>
+  
+    <!-- Profile Edit Form -->
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="profile-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          class="form-control"
+          placeholder="Enter your username"
+        />
+        <div *ngIf="profileForm.controls['username'].invalid && profileForm.controls['username'].touched" class="error">
+          <small>Username is required and should be at least 3 characters long</small>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          placeholder="Enter your email"
+        />
+        <div *ngIf="profileForm.controls['email'].invalid && profileForm.controls['email'].touched" class="error">
+          <small>Valid email is required</small>
+        </div>
+      </div>
+  
+      <!-- Profile Picture (optional) -->
+      <div class="form-group">
+        <label for="profilePicture">Profile Picture</label>
+        <input
+          type="file"
+          id="profilePicture"
+          formControlName="profilePicture"
+          class="form-control"
+          (change)="onProfilePictureChange($event)"
+        />
+      </div>
+
+      <!-- <div *ngIf="profilePicturePreview">
+        <img [src]="profilePicturePreview" alt="Profile Picture" class="profile-picture-preview"  height="100" width="100"/>
+      </div> -->
+  
+      <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Save Changes</button>
+    </form>
+  </div>
+  

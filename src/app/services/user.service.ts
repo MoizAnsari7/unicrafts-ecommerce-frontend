@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChangeDetectorRef, Injectable, OnInit } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { CartService } from './cart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class UserService implements OnInit {
 
   private apiUrl = 'http://localhost:3000/api/users'; // replace with your API base URL
 
-  constructor(private http: HttpClient, ) {
+  constructor(private http: HttpClient, private cartService:CartService ) {
     this.tokenCheck();
   }
 
@@ -24,31 +25,19 @@ export class UserService implements OnInit {
   }
 
 
+  //User Profile
+
   getUserProfile(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/profile`, {
-      headers: this.getAuthHeaders(),
-    });
+    return this.http.get(`${this.apiUrl}/profile`);
   }
 
   updateUserProfile(profile: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/profile`, profile, {
-      headers: this.getAuthHeaders(),
-    });
+    return this.http.put(`${this.apiUrl}/profile`, profile);
   }
 
   uploadProfilePicture(formData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/upload-profile-picture`, formData, {
-      headers: this.getAuthHeaders(),
-    });
+    return this.http.put(`${this.apiUrl}/profile/picture`, formData);
   }
-
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-  }
-
 
 
 
@@ -61,6 +50,7 @@ export class UserService implements OnInit {
       tap((response: any) => {
         const token = response.token; // Assuming the API returns a token
         localStorage.setItem('token', token);
+        this.cartService.syncGuestCartToDatabase();
         this.tokenCheck(); // Trigger state update
       })
     );
@@ -75,17 +65,16 @@ export class UserService implements OnInit {
   }
 
 
-  getOrderHistory(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/orders`);
-  }
+  //User Address
 
   getAddresses(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/addresses`);
+    return this.http.get(`${this.apiUrl}/address`);
   }
 
   addAddress(address: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/address`, address);
   }
+
 
   updateAddress(addressId: string, address: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/address/${addressId}`, address);
@@ -94,7 +83,6 @@ export class UserService implements OnInit {
   deleteAddress(addressId: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/address/${addressId}`);
   }
-
 
 logout(){
   localStorage.removeItem('token');

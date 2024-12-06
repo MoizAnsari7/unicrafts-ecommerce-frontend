@@ -3,33 +3,31 @@
 
   <!-- Show message if no products are available -->
   <div *ngIf="!products || products.length === 0" class="text-center">
-    <p class="text-muted">No products available at the moment.</p>
+    <p class="text-muted">Loading Products...</p>
   </div>
 
   <!-- Products Grid -->
-  <div class="row g-4" *ngIf="products && products.length > 0">
+  <div *ngIf="!loading && products && products.length > 0" class="row g-4">
     <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let product of products">
       <div class="card product-card shadow-sm">
         <div class="card-img-container">
           <img
-            [src]="product.image || 'assets/placeholder.png'"
+            [src]="product.imagePath || 'assets/placeholder.png'"
             class="card-img-top img-fluid"
-            alt="{{ product.name }}"
+            alt="{{ product.name || 'Unnamed Product' }}"
           />
         </div>
         <div class="card-body text-center">
-          <h5 class="card-title">{{ product.name }}</h5>
+          <h5 class="card-title">{{ product.name || "Unnamed Products" }}</h5>
           <p class="card-text text-muted">
             {{ product.description | slice: 0:50 }}...
           </p>
-          <h6 class="text-success fw-bold">₹{{ product.price }}</h6>
+          <h6 class="text-success fw-bold">₹{{ product.price || "N/A" }}</h6>
         </div>
         <div class="card-footer text-center">
           <button
             class="btn btn-primary btn-sm rounded-pill me-2"
-            data-bs-toggle="modal"
-            data-bs-target="#productModal"
-            (click)="selectedProduct = product"
+            [routerLink]="['/product', product._id]"
           >
             View Details
           </button>
@@ -43,7 +41,86 @@
       </div>
     </div>
   </div>
+  
+  
 </div>
 
 <!-- Modal for Product Details -->
 
+
+
+
+
+<div
+  *ngIf="selectedProduct"
+  class="modal fade"
+  id="productModals"
+  tabindex="-1"
+  aria-labelledby="productModalLabel"
+  aria-hidden="true"
+>
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="productModalLabel">
+        {{ selectedProduct?.name }}
+      </h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body text-center">
+      <img
+        [src]="selectedProduct?.image || 'assets/placeholder.png'"
+        alt="{{ selectedProduct?.name }}"
+        class="img-fluid mb-3"
+        style="max-height: 250px; object-fit: contain;"
+      />
+      <p class="text-muted">{{ selectedProduct?.description }}</p>
+      <h6 class="text-success fw-bold">
+        Price: ₹{{ selectedProduct?.price }}
+      </h6>
+
+      <!-- Quantity control -->
+      <div class="d-flex justify-content-center align-items-center mt-3">
+        <button
+          class="btn btn-secondary btn-sm"
+          (click)="decrementQuantity()"
+        >
+          -
+        </button>
+        <span class="mx-3">{{ quantities[selectedProduct._id] || 1 }}</span>
+        <button
+          class="btn btn-secondary btn-sm"
+          (click)="incrementQuantity()"
+        >
+          +
+        </button>
+      </div>
+
+      <!-- Total Price -->
+      <h6 class="mt-3 text-primary fw-bold">
+        Total: ₹{{ selectedProduct?.price * (quantities[selectedProduct._id] || 1) }}
+      </h6>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary btn-sm"
+        data-bs-dismiss="modal"
+      >
+        Close
+      </button>
+      <button
+        class="btn btn-primary btn-sm"
+        (click)="addToCart(selectedProduct)"
+      >
+        {{ addedToCart[selectedProduct._id] ? 'Added' : 'Add to Cart' }}
+      </button>
+    </div>
+  </div>
+</div>
+</div>

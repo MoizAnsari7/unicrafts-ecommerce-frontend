@@ -41,10 +41,7 @@ export class ProductModalComponent implements OnInit, OnDestroy {
       price: [this.product?.price || 0, [Validators.required, Validators.min(0)]],
       discountPrice: [this.product?.discountPrice || 0],
       stock: [this.product?.stock || 0, [Validators.required, Validators.min(0)]],
-      images: this.fb.array(
-        (this.product?.images || []).map(() => this.fb.control(null)),
-        Validators.required
-      ),
+      images: this.fb.array([]),
       attributes: this.fb.group({
         color: [this.product?.attributes?.color || ''],
         size: [this.product?.attributes?.size || ''],
@@ -70,23 +67,36 @@ export class ProductModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Remove an image
   removeImage(index: number): void {
     this.images.removeAt(index);
   }
-
-  // Save product data
   saveProduct(): void {
     if (this.productForm.valid) {
-      const formData = { ...this.productForm.value };
-      formData.images = formData.images.map((file: File) => file.name || file); // Convert images to file names or keep existing ones
-      console.log('Attributes:', this.productForm.get('attributes')?.value);
+      const formData = new FormData();
+      const productData = this.productForm.value;
+  
+      // Append text fields
+      formData.append('name', productData.name);
+      formData.append('price', productData.price.toString()); // Ensure it's a string
+      formData.append('stock', productData.stock.toString()); // Ensure it's a string
+      formData.append('description', productData.description);
+      formData.append('category', productData.category);
+      formData.append('discountPrice', productData.discountPrice.toString()); // Optional
+      formData.append('attributes', JSON.stringify(productData.attributes)); // Convert attributes to a string
+  
+      // Append images
+      productData.images.forEach((file: File) => {
+        console.log('Appending file:', file.name); // Debugging log
+        formData.append('images', file);
+      });
+  
+      // Emit the form data for submission
       this.onSave.emit(formData);
     } else {
-      this.notiflixService.error('Please fill all required fields.');
+      console.error('Form is invalid'); // Add error handling
     }
-    this.closeModal();
   }
+  
 
   // Close modal
   closeModal(): void {

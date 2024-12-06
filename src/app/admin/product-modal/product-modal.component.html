@@ -82,29 +82,31 @@
         </div>
 
         <!-- Images -->
-        <div class="form-group mb-3">
-          <label for="productImages">Images</label>
-          <div *ngFor="let image of images.controls; let i = index">
-            <input
-              type="file"
-              class="form-control mb-2"
-              (change)="handleImageInput($event, i)"
-            />
-            <button
-              type="button"
-              class="btn btn-danger btn-sm mt-1"
-              (click)="removeImage(i)"
-            >
-              Remove
-            </button>
-          </div>
-          <button
-            type="button"
-            class="btn btn-secondary mt-2"
-            (click)="addImage()"
-          >
-            Add Image
-          </button>
+     
+
+<div class="form-group mb-3">
+  <label for="productImages">Images</label>
+  <div *ngFor="let image of images.controls; let i = index">
+    <input
+      type="file"
+      class="form-control mb-2"
+      (change)="handleImageInput($event, i)"
+    />
+    <button
+      type="button"
+      class="btn btn-danger btn-sm mt-1"
+      (click)="removeImage(i)"
+    >
+      Remove
+    </button>
+  </div>
+  <button
+    type="button"
+    class="btn btn-secondary mt-2"
+    (click)="addImage()"
+  >
+    Add Image
+  </button>
         </div>
 
         <!-- Attributes -->

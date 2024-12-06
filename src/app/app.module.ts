@@ -20,6 +20,7 @@ import { AddressManagementComponent } from './components/address-management/addr
 import { AddressDialogComponent } from './components/address-dialog/address-dialog.component';
 import { AdminModule } from './admin/admin.module';
 import { DefaultValuePipe } from './pipe/default-value.pipe';
+import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 
 
 
@@ -38,6 +39,7 @@ import { DefaultValuePipe } from './pipe/default-value.pipe';
     AddressManagementComponent,
     AddressDialogComponent,
     DefaultValuePipe,
+    ProfileInfoComponent,
    
    
   ],

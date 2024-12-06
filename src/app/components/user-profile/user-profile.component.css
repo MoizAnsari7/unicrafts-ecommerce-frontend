@@ -1,84 +1,43 @@
-.profile-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 1rem;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.profile-card,
-.address-card {
-  border: 1px solid #ccc;
+/* General styles */
+.account-container {
+  background-color: #f8f9fa;
   border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.profile-title,
-.address-title {
-  text-align: center;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  color: #333;
+/* Sidebar styles */
+.sidebar {
+  background-color: #fff;
 }
 
-.profile-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.sidebar h4 {
+  color: #007bff;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-control {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.form-control:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-.btn {
-  padding: 0.5rem 1rem;
+.list-group-item {
+  cursor: pointer;
+  font-weight: 500;
   border: none;
   border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
+  margin-bottom: 8px;
 }
 
-.btn-primary {
+.list-group-item:hover {
+  background-color: #e9ecef;
+}
+
+.list-group-item.active {
   background-color: #007bff;
-  color: white;
+  color: #fff;
 }
 
-.btn-primary:hover {
-  background-color: #0056b3;
+/* Main content styles */
+.main-content {
+  background-color: #fff;
+  border-radius: 8px;
+  min-height: 300px;
 }
 
-.btn-success {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-success:hover {
-  background-color: #218838;
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.address-card {
-  background-color: #f9f9f9;
+.main-content h4 {
+  color: #007bff;
 }

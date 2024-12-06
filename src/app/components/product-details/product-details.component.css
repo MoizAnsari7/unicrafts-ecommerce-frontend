@@ -1,0 +1,27 @@
+.container {
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .carousel img {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+
+  .image-wrapper {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .product-images img {
+    height: 200px;
+    max-height: 200px;
+    object-fit: contain;
+  }
+  

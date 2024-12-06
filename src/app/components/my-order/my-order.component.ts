@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NotiflixService } from 'src/app/services/notiflix.service';
 import { OrdersService } from 'src/app/services/order.service';
+import { map } from 'rxjs/operators';
 
 
 @Component({
   selector: 'app-my-orders',
   templateUrl: './my-order.component.html',
   styleUrls: ['./my-order.component.css'],
+  
 })
 export class MyOrderComponent implements OnInit {
   orders: any[] = [];
@@ -14,11 +16,31 @@ export class MyOrderComponent implements OnInit {
   constructor(private ordersService: OrdersService, private notiflixService : NotiflixService) {}
 
   ngOnInit(): void {
-    this.orders = this.ordersService.getOrders(); // Fetch orders
+this.getMyOrders();
+     }
+  
 
-    console.log("this order", this.orders);
+     getMyOrders() {
+      this.ordersService.getOrders()
+      .pipe(
+        map((res: any) => res.orders) // Extract 'orders' array from the API response
+      )
+      .subscribe({
+        next: (orders: any[]) => {
+          this.orders = orders;
+          console.log('Orders fetched successfully:', this.orders);
+        },
+        error: (error) => {
+          console.error('Failed to fetch orders:', error);
+          this.notiflixService.error('Error fetching orders');
+        }
+      });
+    }
     
-  }
+    
+
+
+
 
   getStatusClass(status: string): string {
     switch (status) {
@@ -38,12 +60,9 @@ export class MyOrderComponent implements OnInit {
   }
 
   cancelOrder(orderId: string): void {
-    const order = this.orders.find((o) => o.id === orderId);
-    if (order && order.status !== 'Cancelled') {
-      order.status = 'Cancelled';
-      this.notiflixService.error(`Order #${orderId} has been cancelled.`);
-    } else {
-      this.notiflixService.info(`Order #${orderId} is already cancelled.`);
-    }
+    this.ordersService.cancelOrder(orderId).subscribe((res:any)=>{
+      this.notiflixService.success(`${res.message} for #${orderId}`);
+      this.getMyOrders();
+    })
   }
 }
