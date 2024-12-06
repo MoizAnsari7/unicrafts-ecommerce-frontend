@@ -1,26 +1,53 @@
-.product-management {
-    padding: 20px;
+/* Product Management Styles */
+.product-management h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.product-management .btn {
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.product-management .btn i {
+  margin-right: 5px;
+}
+
+.product-management .table {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.product-management .table thead th {
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+.product-management .badge {
+  font-size: 0.75rem;
+  padding: 0.5em 0.75em;
+  text-transform: capitalize;
+}
+
+.product-management .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .product-management h2 {
+    font-size: 1.5rem;
   }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+
+  .product-management .table thead th,
+  .product-management .table tbody td {
+    font-size: 0.875rem;
   }
-  
-  .table {
-    width: 100%;
-    border: 1px solid #ddd;
+
+  .product-management .btn {
+    font-size: 0.75rem;
   }
-  
-  .table th {
-    background-color: #1b5e20;
-    color: white;
-    text-align: center;
-  }
-  
-  .table td {
-    text-align: center;
-  }
-  
+}

@@ -1,12 +1,62 @@
-.container {
-    max-width: 800px;
+/* Category Management */
+.category-management h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.category-management .table {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.category-management .table th,
+.category-management .table td {
+  text-align: left;
+  vertical-align: middle;
+}
+
+.category-management .table thead th {
+  background: #343a40;
+  color: #ffffff;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.category-management .btn {
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.category-management .btn i {
+  margin-right: 5px;
+}
+
+.category-management .modal-header {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.category-management .modal-header h5 {
+  font-size: 1.25rem;
+}
+
+.category-management .invalid-feedback {
+  font-size: 0.875rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .category-management .table th,
+  .category-management .table td {
+    font-size: 0.875rem;
   }
-  
-  .table {
-    margin-bottom: 0;
+
+  .category-management h2 {
+    font-size: 1.5rem;
   }
-  
-  .modal-content {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+  .category-management .btn {
+    font-size: 0.75rem;
   }
-  
+}

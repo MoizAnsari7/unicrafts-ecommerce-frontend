@@ -52,11 +52,12 @@ this.productService.getAllProducts().subscribe(
     this.products = Array.isArray(res.products) ? res.products : [res.products];
 
     this.filteredProducts = [...this.products]; // Initialize filteredProducts
-
+    
     // Extract unique categories
     this.categories = [
-      ...new Set(this.products.map((product: any) => product.category || 'Uncategorized'))
+      ...new Set(this.products.map((product: any) => product.category.name || 'Uncategorized'))
     ];
+    console.log("category", this.categories);
 
     console.log('Products after fetch:', this.products);
     this.loading = false;
@@ -84,11 +85,18 @@ this.productService.getAllProducts().subscribe(
   
     // Apply search and filter
     this.filteredProducts = this.products.filter((product: any) => {
+      console.log("product", product.category.name);
+
       const matchesSearch =
-        product.name.toLowerCase().includes(searchTermLower) ||
-        product.description.toLowerCase().includes(searchTermLower);
+      (product.name && product.name.toLowerCase().includes(searchTermLower)) ||
+      (product.description &&
+        product.description.toLowerCase().includes(searchTermLower)) ||
+      (product.category.name &&
+        product.category.name.toLowerCase().includes(searchTermLower)) ||
+      (product.price && product.price.toString().includes(searchTermLower)); // Convert price to string for search
+
       const matchesCategory =
-        !this.selectedCategory || product.category === this.selectedCategory;
+        !this.selectedCategory || product.category.name === this.selectedCategory;
   
       return matchesSearch && matchesCategory;
     });
@@ -125,7 +133,9 @@ this.productService.getAllProducts().subscribe(
             this.quantities[product._id] = quantity;
   
             this.cartService.getMyCartItems().subscribe((items: any) => {
-              this.cartItems = items.items;
+              this.cartItems = items.cart.items;
+              console.log("cartItems Length",items.cart.items.length);
+              
               this.cartService.cartItems.next(this.cartItems.length);
             });
   
