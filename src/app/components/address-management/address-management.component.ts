@@ -16,7 +16,10 @@ export class AddressManagementComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.loadAddresses();
+    
+    setTimeout(()=>{
+      this.loadAddresses();
+    },1000)
   }
 
   loadAddresses(): void {
