@@ -1,6 +1,6 @@
-<div class="address-container">
+<div class="address-container container py-4">
   <!-- Title -->
-  <h3 class="address-title">Manage Addresses</h3>
+  <h2 class="address-title text-center mb-4">Manage Your Addresses</h2>
 
   <!-- Loading Spinner -->
   <div *ngIf="isLoading" class="text-center my-4">
@@ -11,35 +11,26 @@
 
   <!-- No Addresses -->
   <div *ngIf="!isLoading && addresses.length === 0" class="no-address text-center">
-    <p>You haven't added any addresses yet.</p>
+    <p class="text-muted">You haven't added any addresses yet.</p>
     <button class="btn btn-primary" (click)="openDialog('add')">Add New Address</button>
   </div>
 
   <!-- Address Cards -->
-  <div *ngIf="!isLoading && addresses.length > 0" class="address-list row g-3">
-    <div
-      *ngFor="let address of addresses"
-      class="col-12 col-md-6 col-lg-4"
-    >
-      <div class="card address-card h-100">
+  <div class="row g-4" *ngIf="!isLoading && addresses.length > 0">
+    <div class="col-md-6 col-lg-4" *ngFor="let address of addresses">
+      <div class="card shadow-sm">
         <div class="card-body">
-          <!-- Address Details -->
-          <h5 class="card-title">
-            {{ address.default ? 'Default Address' : '' }}
-          </h5>
-          <p><strong>Street:</strong> {{ address.street }}</p>
-          <p><strong>City:</strong> {{ address.city }}</p>
-          <p><strong>State:</strong> {{ address.state }}</p>
-          <p><strong>Country:</strong> {{ address.country }}</p>
-          <p><strong>Postal Code:</strong> {{ address.zip }}</p>
-          <p><strong>Phone:</strong> {{ address.phone }}</p>
-
-          <!-- Actions -->
-          <div class="address-actions mt-3">
-            <button class="btn btn-outline-primary me-2" (click)="openDialog('edit', address)">
+          <h5 class="card-title text-primary">{{ address.street }}</h5>
+          <p class="card-text">
+            {{ address.city }}, {{ address.state }}<br />
+            {{ address.country }} - {{ address.zip }}<br />
+            <strong class="text-muted bg-warning">{{ address.phone}}</strong>
+          </p>
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-primary btn-sm" (click)="openDialog('edit', address)">
               Edit
             </button>
-            <button class="btn btn-outline-danger" (click)="deleteAddress(address._id)">
+            <button class="btn btn-outline-danger btn-sm" (click)="deleteAddress(address._id)">
               Delete
             </button>
           </div>
@@ -49,35 +40,50 @@
   </div>
 
   
+   <!-- Add New Address Button -->
+   <div class="text-center mt-4" *ngIf="addresses.length > 0">
+    <button class="btn btn-primary" (click)="openDialog('add')">Add New Address</button>
+  </div>
 
-  <!-- Address Dialog Modal -->
-  <div
-    class="modal fade show"
-    tabindex="-1"
-    role="dialog"
-    style="display: block;"
-    *ngIf="isDialogOpen"
-  >
+  <!-- Modal for Add/Edit Address -->
+  <div class="modal fade show" tabindex="-1" role="dialog" style="display: block;" *ngIf="isDialogOpen">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">
-            {{ mode === 'add' ? 'Add Address' : 'Edit Address' }}
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            aria-label="Close"
-            (click)="closeDialog()"
-          ></button>
+          <h5 class="modal-title">{{ mode === 'add' ? 'Add Address' : 'Edit Address' }}</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="closeDialog()"></button>
         </div>
         <div class="modal-body">
-          <app-address-dialog
-            [address]="currentAddress"
-            [mode]="mode"
-            (onSave)="handleSave($event)"
-            (onCancel)="closeDialog()"
-          ></app-address-dialog>
+          <form (ngSubmit)="saveAddress()">
+            <div class="form-group mb-3">
+              <label for="street">Street</label>
+              <input type="text" id="street" [(ngModel)]="currentAddress.street" name="street" class="form-control" required />
+            </div>
+            <div class="form-group mb-3">
+              <label for="city">City</label>
+              <input type="text" id="city" [(ngModel)]="currentAddress.city" name="city" class="form-control" required />
+            </div>
+            <div class="form-group mb-3">
+              <label for="state">State</label>
+              <input type="text" id="state" [(ngModel)]="currentAddress.state" name="state" class="form-control" required />
+            </div>
+            <div class="form-group mb-3">
+              <label for="country">Country</label>
+              <input type="text" id="country" [(ngModel)]="currentAddress.country" name="country" class="form-control" required />
+            </div>
+            <div class="form-group mb-3">
+              <label for="postalCode">Postal Code</label>
+              <input type="text" id="zip" [(ngModel)]="currentAddress.zip" name="zip" class="form-control" required />
+            </div>
+            <div class="form-group mb-3">
+              <label for="phone">Phone</label>
+              <input type="text" id="phone" [(ngModel)]="currentAddress.phone" name="phone" class="form-control" required />
+            </div>
+            <div class="text-end">
+              <button type="button" class="btn btn-secondary me-2" (click)="closeDialog()">Cancel</button>
+              <button type="submit" class="btn btn-primary">{{ mode === 'add' ? 'Add' : 'Save' }}</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

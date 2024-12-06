@@ -8,9 +8,7 @@ import { UserService } from '../../services/user.service';
 })
 export class AddressManagementComponent implements OnInit {
   addresses: any[] = [];
-  isLoading: boolean = true;
-
-  // Dialog variables
+  isLoading = true;
   isDialogOpen = false;
   mode: 'add' | 'edit' = 'add';
   currentAddress: any = {};
@@ -21,15 +19,14 @@ export class AddressManagementComponent implements OnInit {
     this.loadAddresses();
   }
 
-  /**
-   * Load addresses from the server.
-   */
   loadAddresses(): void {
     this.isLoading = true;
     this.userService.getAddresses().subscribe(
-      (addresses) => {
-        this.addresses = addresses;
+      (res) => {
+        this.addresses = res.address;
         this.isLoading = false;
+        console.log(res.address);
+        
       },
       (error) => {
         console.error('Error loading addresses:', error);
@@ -38,51 +35,35 @@ export class AddressManagementComponent implements OnInit {
     );
   }
 
-  /**
-   * Open dialog for adding or editing addresses.
-   */
   openDialog(mode: 'add' | 'edit', address: any = {}): void {
     this.isDialogOpen = true;
     this.mode = mode;
     this.currentAddress = mode === 'edit' ? { ...address } : {};
   }
 
-  /**
-   * Close dialog without saving changes.
-   */
   closeDialog(): void {
     this.isDialogOpen = false;
   }
 
-  /**
-   * Handle saving an address.
-   */
-  handleSave(address: any): void {
+  saveAddress(): void {
     if (this.mode === 'add') {
-      // Add new address
-      this.userService.addAddress(address).subscribe(
-        () => this.loadAddresses(),
-        (error) => console.error('Error adding address:', error)
-      );
-    } else if (this.mode === 'edit') {
-      // Update existing address
-      this.userService.updateAddress(this.currentAddress._id, address).subscribe(
-        () => this.loadAddresses(),
-        (error) => console.error('Error updating address:', error)
-      );
+      this.userService.addAddress(this.currentAddress).subscribe((res:any) => {
+        this.loadAddresses()
+      });
+
+    } else {
+      this.userService.updateAddress(this.currentAddress._id, this.currentAddress).subscribe(() => this.loadAddresses());
     }
     this.closeDialog();
   }
 
-  /**
-   * Delete an address.
-   */
-  deleteAddress(addressId: string): void {
+  deleteAddress(addressId: any) {
     if (confirm('Are you sure you want to delete this address?')) {
-      this.userService.deleteAddress(addressId).subscribe(
-        () => this.loadAddresses(),
-        (error) => console.error('Error deleting address:', error)
-      );
+      this.userService.deleteAddress(addressId).subscribe((res:any) =>{ 
+        this.loadAddresses();
+        console.log("ressssssssssss",res);
+        
+    });
     }
   }
 }

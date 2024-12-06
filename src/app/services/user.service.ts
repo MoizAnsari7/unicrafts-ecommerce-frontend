@@ -25,6 +25,8 @@ export class UserService implements OnInit {
   }
 
 
+  //User Profile
+
   getUserProfile(): Observable<any> {
     return this.http.get(`${this.apiUrl}/profile`);
   }
@@ -36,9 +38,6 @@ export class UserService implements OnInit {
   uploadProfilePicture(formData: FormData): Observable<any> {
     return this.http.put(`${this.apiUrl}/profile/picture`, formData);
   }
-
-  
-
 
 
 
@@ -66,17 +65,16 @@ export class UserService implements OnInit {
   }
 
 
-  getOrderHistory(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/orders`);
-  }
+  //User Address
 
   getAddresses(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/addresses`);
+    return this.http.get(`${this.apiUrl}/address`);
   }
 
   addAddress(address: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/address`, address);
   }
+
 
   updateAddress(addressId: string, address: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/address/${addressId}`, address);
@@ -85,7 +83,6 @@ export class UserService implements OnInit {
   deleteAddress(addressId: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/address/${addressId}`);
   }
-
 
 logout(){
   localStorage.removeItem('token');
