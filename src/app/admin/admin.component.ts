@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
+import { UserService } from '../services/user.service';
+import { NotiflixService } from '../services/notiflix.service';
 
 @Component({
   selector: 'app-admin',
@@ -11,6 +13,8 @@ export class AdminComponent implements OnInit {
   activeTab: string = 'dashboard'; // Default tab
 
   
+constructor(private userService:UserService, private notiflixService:NotiflixService){}
+
   ngOnInit(): void {
    this.tokenCheck();
   }
@@ -54,5 +58,11 @@ export class AdminComponent implements OnInit {
     } else {
       console.log('No token found in localStorage.');
     }
+  }
+
+  logout(){
+    this.userService.logout();
+    this.notiflixService.info('Logout Successfully');
+    window.location.href = '/login';
   }
 }

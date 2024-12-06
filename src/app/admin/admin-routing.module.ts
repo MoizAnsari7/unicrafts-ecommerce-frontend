@@ -5,6 +5,7 @@ import { AdminComponent } from './admin.component';
 import { ProductManagementComponent } from './product-management/product-management.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { CategoryManagmentComponent } from './category-managment/category-managment.component';
+import { AdminGuard } from '../guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -12,9 +13,11 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Redirect to dashboard by default
-      { path: 'dashboard', component: AdminDashboardComponent },
-      { path: 'products', component: ProductManagementComponent },
-      { path: 'category', component: CategoryManagmentComponent },
+      { path: 'dashboard', component: AdminDashboardComponent, canActivate:[AdminGuard] },
+      { path: 'products', component: ProductManagementComponent, canActivate:[AdminGuard]},
+      { path: 'category', component: CategoryManagmentComponent, canActivate:[AdminGuard] },
+      // { path: 'category', component: CategoryManagmentComponent, canActivate:[AdminGuard] },
+      {path : '**', component: AdminDashboardComponent, canActivate:[AdminGuard]}
     ],
   },
 ];

@@ -87,6 +87,7 @@ export class UserService implements OnInit {
 logout(){
   localStorage.removeItem('token');
   this.isToken.next(false);
+  this.tokenCheck();
 }
 
 

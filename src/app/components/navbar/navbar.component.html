@@ -36,34 +36,42 @@
           <a class="nav-link" routerLink="contact">Contact</a>
         </li>
 
-        <li class="nav-item" *ngIf="(userService.isAuthenticated$ | async)">
+        <li class="nav-item" *ngIf="isAuthenticated">
           <a class="nav-link" routerLink="my-order">My Orders</a>
         </li>
 
-        <li class="nav-item" *ngIf="!(userService.isAuthenticated$ | async)">
+        <li class="nav-item" *ngIf="!isAuthenticated">
           <a class="nav-link" routerLink="/register">Register</a>
         </li>
 
-        <li class="nav-item" *ngIf="(userService.isAuthenticated$ | async)">
+        <li class="nav-item" *ngIf="isAuthenticated">
           <a class="nav-link" routerLink="user-profile">My Profile</a>
         </li>
 
-        <li class="nav-item" *ngIf="(userService.isAuthenticated$ | async)">
+        <li class="nav-item" *ngIf="isAuthenticated">
           <a class="nav-link" (click)="logout()">Logout</a>
         </li>
 
-        <li class="nav-item" *ngIf="!(userService.isAuthenticated$ | async)">
+        <li class="nav-item" *ngIf="!isAuthenticated">
           <a class="nav-link" routerLink="/login">Login</a>
         </li>
 
+        <!-- Admin Panel Link (Visible only to Admins) -->
+        <li class="nav-item" *ngIf="isAdmin">
+          <a class="nav-link text-danger" routerLink="/admin/dashboard">Admin Panel</a>
+        </li>
+
         <li class="nav-item">
-          <a class="btn btn-primary btn-sm ms-2 position-relative" routerLink="cart">
+          <a
+            class="btn btn-primary btn-sm ms-2 position-relative"
+            routerLink="cart"
+          >
             Cart
             <span
               class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-              *ngIf="(cartService.cartItemsCount$ | async | defaultValue: 0) > 0"
-              >
-                {{ cartService.cartItemsCount$ | async | defaultValue: 0 }}
+              *ngIf="cartItems > 0"
+            >
+              {{ cartItems }}
             </span>
           </a>
         </li>

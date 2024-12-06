@@ -1,22 +1,51 @@
 <div class="admin-panel" *ngIf="isAdmin">
-  <!-- Navbar with Toggle Button (Only visible on mobile) -->
-  <nav class="navbar">
-    <h2 class="navbar-title">Admin Panel</h2>
-
-    <!-- Collapsible Navbar Menu -->
-    <ul class="navbar-menu">
-      <li routerLink="/admin/dashboard">Dashboard</li>
-      <li routerLink="/admin/category">Category</li>
-      <li routerLink="/admin/products">Products</li>
-      <li routerLink="/admin/orders">Orders</li>
-      <li routerLink="/admin/users">Users</li>
-      <li routerLink="/admin/reports">Reports</li>
-      <li routerLink="/admin/setting">Settings</li>
+  <!-- Sidebar (Navigation Menu) -->
+  <div class="sidebar">
+    <div class="logo-section">
+      <img
+        src="https://via.placeholder.com/270x50.png?text=Admin+Panel"
+        alt="Admin Logo"
+        class="logo"
+      />
+    </div>
+    <ul class="sidebar-menu">
+      <li routerLink="/admin/dashboard" routerLinkActive="active">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </li>
+      <li routerLink="/admin/category" routerLinkActive="active">
+        <i class="fas fa-list"></i> Categories
+      </li>
+      <li routerLink="/admin/products" routerLinkActive="active">
+        <i class="fas fa-box"></i> Products
+      </li>
+      <li routerLink="/admin/orders" routerLinkActive="active">
+        <i class="fas fa-shopping-cart"></i> Orders
+      </li>
+      <li routerLink="/admin/users" routerLinkActive="active">
+        <i class="fas fa-users"></i> Users
+      </li>
+      <li routerLink="/admin/reports" routerLinkActive="active">
+        <i class="fas fa-chart-line"></i> Reports
+      </li>
+      <li routerLink="/admin/setting" routerLinkActive="active">
+        <i class="fas fa-cog"></i> Settings
+      </li>
     </ul>
-  </nav>
+  </div>
 
-  <!-- Main Content -->
-  <main class="content">
-   <router-outlet></router-outlet>
-  </main>
+  <!-- Main Content Area -->
+  <div class="content-area">
+    <header class="admin-header">
+      <h2>Welcome, Admin</h2>
+      <button class="logout-btn"  (click)="logout()" >
+        <i class="fas fa-sign-out-alt" ></i> Logout
+      </button>
+    </header>
+
+
+    <!-- Dynamic Content -->
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
