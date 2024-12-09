@@ -65,4 +65,17 @@ constructor(private userService:UserService, private notiflixService:NotiflixSer
     this.notiflixService.info('Logout Successfully');
     window.location.href = '/login';
   }
+
+
+  isSidebarCollapsed = false;
+  toggleColor = 'dark';
+  toggleSidebar() {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed;
+    if(this.toggleColor == 'dark'){
+
+      this.toggleColor = 'light'
+    }else{
+      this.toggleColor = 'dark'
+    }
+  }
 }

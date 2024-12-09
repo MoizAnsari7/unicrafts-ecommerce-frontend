@@ -6,6 +6,8 @@ import { ProductManagementComponent } from './product-management/product-managem
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { CategoryManagmentComponent } from './category-managment/category-managment.component';
 import { AdminGuard } from '../guards/admin.guard';
+import { CouponComponent } from './coupon/coupon.component';
+
 
 const routes: Routes = [
   {
@@ -16,7 +18,7 @@ const routes: Routes = [
       { path: 'dashboard', component: AdminDashboardComponent, canActivate:[AdminGuard] },
       { path: 'products', component: ProductManagementComponent, canActivate:[AdminGuard]},
       { path: 'category', component: CategoryManagmentComponent, canActivate:[AdminGuard] },
-      // { path: 'category', component: CategoryManagmentComponent, canActivate:[AdminGuard] },
+      { path: 'coupon', component: CouponComponent, canActivate:[AdminGuard] },
       {path : '**', component: AdminDashboardComponent, canActivate:[AdminGuard]}
     ],
   },

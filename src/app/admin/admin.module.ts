@@ -11,6 +11,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
 import { CategoryManagmentComponent } from './category-managment/category-managment.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { CouponComponent } from './coupon/coupon.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
     ProductManagementComponent,
     ProductModalComponent,
     CategoryManagmentComponent,
-    AdminDashboardComponent, 
+    AdminDashboardComponent,
+    CouponComponent, 
   ],
  
   imports: [

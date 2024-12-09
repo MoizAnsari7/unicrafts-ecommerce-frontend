@@ -1,6 +1,6 @@
 <div class="admin-panel" *ngIf="isAdmin">
   <!-- Sidebar (Navigation Menu) -->
-  <div class="sidebar">
+  <div class="sidebar" [class.collapsed]="isSidebarCollapsed">
     <div class="logo-section">
       <img
         src="https://via.placeholder.com/270x50.png?text=Admin+Panel"
@@ -27,6 +27,9 @@
       <li routerLink="/admin/reports" routerLinkActive="active">
         <i class="fas fa-chart-line"></i> Reports
       </li>
+      <li routerLink="/admin/coupon" routerLinkActive="active">
+        <i class="fa fa-money-bill"></i> Coupon
+      </li>
       <li routerLink="/admin/setting" routerLinkActive="active">
         <i class="fas fa-cog"></i> Settings
       </li>
@@ -37,15 +40,19 @@
   <div class="content-area">
     <header class="admin-header">
       <h2>Welcome, Admin</h2>
-      <button class="logout-btn"  (click)="logout()" >
-        <i class="fas fa-sign-out-alt" ></i> Logout
+      <button class="btn logout-btn" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
       </button>
     </header>
-
 
     <!-- Dynamic Content -->
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>
   </div>
+
+  <!-- Toggle Button (for Mobile View) -->
+  <button class="toggle-sidebar-btn" (click)="toggleSidebar()">
+    <i class="fas text-{{toggleColor}}" [class.fa-bars]="!isSidebarCollapsed" [class.fa-times]="isSidebarCollapsed"></i>
+  </button>
 </div>

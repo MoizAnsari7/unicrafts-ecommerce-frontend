@@ -1,9 +1,11 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CouponService } from 'src/app/admin/adminService/coupon.service';
 import { CartService } from 'src/app/services/cart.service';
 import { NotiflixService } from 'src/app/services/notiflix.service';
 import { OrdersService } from 'src/app/services/order.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-checkout',
@@ -46,22 +48,17 @@ export class CheckoutComponent implements OnInit {
     private cartService: CartService,
     private orderService: OrdersService,
     private router: Router,
-    private notiflixService: NotiflixService
+    private notiflixService: NotiflixService,
+    private couponService : CouponService,
+    private userService : UserService
   ) {}
 
   ngOnInit(): void {
-  // this.getCartDataIntoCheckout();
   this.loadCartData();
+  this.getCouponList();
+  this.getUserId();
   }
 
-  // getCartDataIntoCheckout(){
-  //   this.cartService.getMyCartItems().subscribe((res:any)=>{
-  //     this.cartItems = res.cart.items;
-  //     this.totalAmount = res.cart.total
-  //     console.log("from Checkout", res);
-      
-  //   })
-  // }
 
   // Load cart data from the CartService
   loadCartData(): void {
@@ -87,17 +84,7 @@ export class CheckoutComponent implements OnInit {
     this.totalAmount = this.subtotal + this.tax + this.deliveryCharge - this.discount;
   }
 
-  // Apply a coupon code
-  applyCoupon(): void {
-    // Dummy logic for coupon validation
-    if (this.couponCode === 'SAVE10') {
-      this.discount = this.subtotal * 0.1; // 10% discount
-      this.calculateTotals();
-      alert('Coupon applied successfully!');
-    } else {
-      alert('Invalid coupon code!');
-    }
-  }
+  
 
   // Place the order
   placeOrder(): void {
@@ -141,4 +128,41 @@ export class CheckoutComponent implements OnInit {
       }
     );
   }
+
+
+  applyCoupon(){
+    this.couponService.applyCoupon(this.couponCode,this.totalAmount).subscribe((res:any)=>{
+console.log("discountedTotal",res);
+this.totalAmount = res.discountedTotal;
+this.notiflixService.success(res.message);
+// this.loadCartData();
+this.display = 'block'
+    },(err:any)=>{
+      this.notiflixService.error(err.error.message); 
+    })
+  }
+
+  display : any ='none'
+couponList : any ;
+currentUserId : any;
+
+  getCouponList(){
+    this.couponService.getCoupons().subscribe((res:any)=>{
+console.log("coupon list", res.coupon);
+this.couponList = res.coupon;
+    })
+  }
+
+
+  isCouponApplied(couponCode: string): boolean {
+    const coupon = this.couponList.find((c:any) => c.code === couponCode);
+    return coupon ? coupon.usedBy.includes(this.currentUserId) : false;
+  }
+
+  getUserId(){
+    this.userService.getUserProfile().subscribe((res:any)=>{
+     this.currentUserId =  res.user._id;
+    })
+  }
+
 }
