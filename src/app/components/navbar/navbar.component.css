@@ -28,4 +28,52 @@
   .btn-primary:hover {
     background-color: #0056b3;
   }
+
+  /* Cart Button Styles */
+.btn-cart {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 15px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #007bff;
+  border-radius: 25px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.btn-cart .fa-shopping-cart {
+  font-size: 20px;
+}
+
+.btn-cart .cart-text {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Cart Button Hover Effects */
+.btn-cart:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cart Badge Styles */
+.btn-cart .badge {
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #e74c3c;
+  padding: 5px 10px;
+  transform: translate(50%, -50%);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .btn-cart {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
+
   

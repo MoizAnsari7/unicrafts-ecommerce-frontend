@@ -48,25 +48,20 @@
           <a class="nav-link" routerLink="user-profile">My Profile</a>
         </li>
 
-        <li class="nav-item" *ngIf="isAuthenticated">
-          <a class="nav-link" (click)="logout()">Logout</a>
-        </li>
-
-        <li class="nav-item" *ngIf="!isAuthenticated">
-          <a class="nav-link" routerLink="/login">Login</a>
-        </li>
-
+        
         <!-- Admin Panel Link (Visible only to Admins) -->
         <li class="nav-item" *ngIf="isAdmin">
           <a class="nav-link text-danger" routerLink="/admin/dashboard">Admin Panel</a>
         </li>
 
+        
         <li class="nav-item">
           <a
-            class="btn btn-primary btn-sm ms-2 position-relative"
+            class="btn btn-cart position-relative"
             routerLink="cart"
           >
-            Cart
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-text ms-2">Cart</span>
             <span
               class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
               *ngIf="cartItems > 0"
@@ -75,6 +70,19 @@
             </span>
           </a>
         </li>
+        
+        
+
+        <li class="nav-item" *ngIf="isAuthenticated">
+          <a class="nav-link" (click)="logout()">Logout</a>
+        </li>
+
+        <li class="nav-item" *ngIf="!isAuthenticated">
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+
+
+        
       </ul>
     </div>
   </div>
